@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->ulid("id")->primary();
             $table->morphs("versionable");
             $table->foreignId("user_id");
-            $table->text("content");
+            $table->binary("content")->nullable();
+            $table->boolean("is_diff")->default(false);
+            $table->string("compression", 10)->default("none");
             $table->integer("word_count");
             $table->timestamps();
         });

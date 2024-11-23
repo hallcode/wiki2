@@ -3,10 +3,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-        {{ env('APP_NAME') }}
         @if(isset($pageTitle))
-        | {{$pageTitle}}
+        {{$pageTitle}} |
         @endif
+        {{ env('APP_NAME') }}
     </title>
 
     <!-- Styles / Scripts -->

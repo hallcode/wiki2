@@ -18,8 +18,6 @@
 
 
 @section('content')
-    <p>All pages</p>
-
     <section>
         @if(count($pages) < 1)
             <div class="default-box">
@@ -29,13 +27,18 @@
             </div>
         @else
 
-        <ol>
-        @foreach($pages as $page)
-            <li>
-                <a href="/">{{ $page->title }}</a>
-            </li>
+
+        @foreach($pages as $letter => $group)
+            <h5>{{ $letter }}</h5>
+            <ol class="page-list">
+            @foreach($group as $page)
+                <li>
+                    <a href="{{ route('page.view', ['slug' => $page->slug]) }}">{{ $page->title }}</a>
+                </li>
+            @endforeach
+            </ol>
+
         @endforeach
-        </ol>
 
         @endif
 

@@ -54,6 +54,9 @@ trait HasVersions
             "user_id" => auth()->id() ?? null,
         ]);
 
+        $version->encodeContent($content);
+        $version->save();
+
         // Optionally set this new version as the current version
         if ($setCurrent) {
             $this->version_id = $version->id;

@@ -12,17 +12,32 @@ trait TracksChanges
      */
     public static function bootTracksChanges()
     {
-        static::created(function ($model) {
-            $model->saveChange("created");
-        });
+        if (
+            isset(static::$dontTrack) &&
+            !in_array("created", static::$dontTrack)
+        ) {
+            static::created(function ($model) {
+                $model->saveChange("created");
+            });
+        }
 
-        static::updated(function ($model) {
-            $model->saveChange("updated");
-        });
+        if (
+            isset(static::$dontTrack) &&
+            !in_array("updated", static::$dontTrack)
+        ) {
+            static::updated(function ($model) {
+                $model->saveChange("updated");
+            });
+        }
 
-        static::deleted(function ($model) {
-            $model->saveChange("deleted");
-        });
+        if (
+            isset(static::$dontTrack) &&
+            !in_array("deleted", static::$dontTrack)
+        ) {
+            static::deleted(function ($model) {
+                $model->saveChange("deleted");
+            });
+        }
     }
 
     /**

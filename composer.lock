@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a1d0e522de0b4be078271c672242aa8",
+    "content-hash": "a90b55e803ded77f8a9f018c90d103a1",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -737,6 +737,67 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "cb56001e54359df7ae76dc522d08845dc741621b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/cb56001e54359df7ae76dc522d08845dc741621b",
+                "reference": "cb56001e54359df7ae76dc522d08845dc741621b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.6.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "require-dev": {
+                "cerdic/css-tidy": "^1.7 || ^2.0",
+                "simpletest/simpletest": "dev-master"
+            },
+            "suggest": {
+                "cerdic/css-tidy": "If you want to use the filter 'Filter.ExtractStyleBlocks'.",
+                "ext-bcmath": "Used for unit conversion and imagecrash protection",
+                "ext-iconv": "Converts text to and from non-UTF-8 encodings",
+                "ext-tidy": "Used for pretty-printing HTML"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ],
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "exclude-from-classmap": [
+                    "/library/HTMLPurifier/Language/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "support": {
+                "issues": "https://github.com/ezyang/htmlpurifier/issues",
+                "source": "https://github.com/ezyang/htmlpurifier/tree/v4.18.0"
+            },
+            "time": "2024-11-01T03:51:45+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -5838,6 +5899,64 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "yetanotherape/diff-match-patch",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yetanotherape/diff-match-patch.git",
+                "reference": "e93beb95bea67d2a9f2a662434ca7fbf90b0b172"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yetanotherape/diff-match-patch/zipball/e93beb95bea67d2a9f2a662434ca7fbf90b0b172",
+                "reference": "e93beb95bea67d2a9f2a662434ca7fbf90b0b172",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DiffMatchPatch\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Daniil Skrobov",
+                    "email": "yetanotherape@gmail.com"
+                },
+                {
+                    "name": "Neil Fraser",
+                    "email": "fraser@google.com",
+                    "homepage": "http://neil.fraser.name/"
+                }
+            ],
+            "description": "Port of the google-diff-match-patch (https://github.com/google/diff-match-patch) lib to PHP",
+            "homepage": "https://github.com/yetanotherape/diff-match-patch",
+            "keywords": [
+                "Fuzzy search",
+                "Match",
+                "diff",
+                "patch"
+            ],
+            "support": {
+                "issues": "https://github.com/yetanotherape/diff-match-patch/issues",
+                "source": "https://github.com/yetanotherape/diff-match-patch/tree/v1.1.0"
+            },
+            "time": "2020-12-20T17:28:39+00:00"
         }
     ],
     "packages-dev": [

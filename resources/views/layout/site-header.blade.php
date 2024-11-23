@@ -1,14 +1,10 @@
 <header class="site-header">
-    <aside>
-        <button id="sidebar-toggle" class="menu-button" onclick="toggleSidebar()">
-            <x-heroicon-c-chevron-double-left class="close" />
-            <x-heroicon-c-chevron-double-right class="open" />
-        </button>
+    <aside id="left-buttons">
     </aside>
 
     <section class="masthead">
         <aside>
-            Logo
+            {{ env('APP_NAME') }}
         </aside>
         @auth
             <form action="/search" class="site-search">
@@ -22,36 +18,18 @@
     </section>
 
     <section>
+        <nav class="horizontal-nav">
         @auth
-            <button class="menu-button" onclick="toggleUserMenu()">
+            <button>
+                Upload
+                <x-heroicon-o-arrow-up-on-square-stack />
+            </button>
+            <button class="menu-button">
                 <x-heroicon-c-bars-3 />
             </button>
-            <nav id="user-menu" class="user-menu closed">
-                <header>
-                    User Menu
-                    <button class="menu-button" onclick="toggleUserMenu()">
-                        <x-heroicon-c-x-mark />
-                    </button>
-                </header>
-                <a href="{{ route('profile.edit') }}">Profile</a>
-                @stack('user-menu')
-                <a href="#">Settings</a>
-                <x-logout />
-            </nav>
         @else
             <a href="/login">Login</a>
         @endauth
+        </nav>
     </section>
-
 </header>
-
-
-@push('scripts')
-    <script>
-        function toggleUserMenu() {
-            let userMenu = document.getElementById('user-menu');
-            userMenu.classList.toggle('closed')
-        }
-
-    </script>
-@endpush

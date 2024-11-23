@@ -4,8 +4,7 @@
 
 <body>
     @include('layout.site-header')
-
-    <main id="wrapper">
+    <article>
         <header id="page-header">
             <h1>{{ isset($pageTitle) ? $pageTitle : 'untitled' }}</h1>
             <nav>
@@ -17,61 +16,63 @@
                 </section>
             </nav>
         </header>
-        <aside id="sidebar" class="left-sidebar closed">
-            @stack('sidebar')
+        <main class="base-wrapper @stack('page-class')">
+            <aside id="sidebar" class="left-sidebar" x-data="{ open: false }" x-show="open" x-transition @click.outside="open = false">
+                <template x-teleport="#left-buttons">
+                    <button id="sidebar-toggle" class="menu-button" @click="open = !open">
+                        <x-heroicon-c-chevron-double-left x-show="open" />
+                        <x-heroicon-c-chevron-double-right x-show="!open" />
+                    </button>
+                </template>
+                @stack('sidebar')
+                <nav class="site-menu">
+                    <ul class="menu-list">
+                        <li>
+                            <h2>Menu</h2>
+                        </li>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('page.all') }}">All Pages</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('recent-changes') }}">Recent Changes</a>
+                        </li>
+                        <li>
+                            <a href="/">Random Page</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
 
-            <nav class="site-menu">
-                <ul class="menu-list">
-                    <li>
-                        <h2>Menu</h2>
-                    </li>
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('page.all') }}">All Pages</a>
-                    </li>
-                    <li>
-                        <a href="/">Random Page</a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-        <article>
-            @yield('content')
-        </article>
-        <aside class="right-sidebar">
-            @stack('right-sidebar')
-        </aside>
-    </main>
+            <section class="article">
+                @yield('content')
+            </section>
+
+            <aside class="right-sidebar">
+                @stack('right-sidebar')
+            </aside>
+        </main>
+
+    </article>
+
+
+    <footer id="site-footer">
+        <header>
+                {{ env('APP_NAME') }}
+        </header>
+        <p>
+            The content on this site is &copy; 2014-{{ date('Y') }}. All rights reserved.
+        </p>
+        <p>
+            Wiki2 software by <a href="https://github.com/hallcode">Hallcode</a>.
+        </p>
+    </footer>
 
 
     @bukScripts
-        @stack('scripts')
-        <script>
-            function toggleSidebar() {
-                let sidebar = document.getElementById('sidebar');
-                let toggleButton = document.getElementById('sidebar-toggle');
-
-                sidebar.classList.toggle('closed')
-                toggleButton.classList.toggle('is-open')
-            }
-
-            function setSidebarOpen() {
-                let sidebar = document.getElementById('sidebar');
-                let toggleButton = document.getElementById('sidebar-toggle');
-
-                sidebar.classList.remove("closed");
-                toggleButton.classList.add("is-open");
-            }
-
-            window.onload = function () {
-                if (window.innerWidth >= 940) {
-                    setSidebarOpen();
-                }
-            }
-
-        </script>
+    @stack('scripts')
 </body>
 
 </html>

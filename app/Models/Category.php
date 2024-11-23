@@ -13,6 +13,10 @@ class Category extends Model
     use HasVersions;
     use TracksChanges;
 
+    public $timestamps = false;
+
+    protected $fillable = ["title", "user_id"];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "user_id");

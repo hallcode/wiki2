@@ -7,7 +7,7 @@
     padding: 0;
 
     & > li {
-        background-color: var(--colour-gray-300);
+        background-color: var(--gray-100);
         border: 1px solid var(--border-colour);
         border-top: none;
 
@@ -16,7 +16,7 @@
         }
 
         &:hover {
-            background-color: var(--colour-gray-400);
+            background-color: var(--gray-200);
         }
 
         a,

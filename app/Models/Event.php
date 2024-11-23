@@ -14,7 +14,7 @@ class Event extends Model
     use HasVersions;
     use TracksChanges;
 
-    protected $fillable = ["title", "date", "type"];
+    protected $fillable = ["title", "date", "type", "user_id"];
 
     /**
      * Get the attributes that should be cast.

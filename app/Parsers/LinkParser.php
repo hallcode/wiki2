@@ -2,9 +2,12 @@
 
 namespace App\Parsers;
 
+use Illuminate\Support\Facades\DB;
+
 class LinkParser
 {
     protected string $rawText;
+    protected string $linkRegex = "/\[\[([^\|\]\[]+)\|?([^\|\[\]]*)\]\]/";
 
     public function __construct(string $rawText)
     {
@@ -13,39 +16,50 @@ class LinkParser
 
     /**
      * Scans the rawText and returns an array containing details of the links found in the
-     * text and if they point to an existant page.
+     * text.
      *
      * @return array
      */
     public function getLinks(): array
     {
-        $rawText = $this->rawText;
         $links = [];
-        $currentLink = 0;
-        $onLink = false;
-        for ($i = 1; isset($rawText[$i]); $i++) {
-            $char = $rawText[$i];
-            if ($char != "[" && !$onLink) {
-                continue;
-            }
-
-            if ($char == "[" && $onLink) {
-                continue;
-            }
-
-            if (!$onLink && $char == "[") {
-                $onLink = true;
-                $currentLink++;
-                continue;
-            }
-
-            if ($onLink && $char == "]") {
-                $onLink = false;
-            }
-
-            $links[$currentLink] += $char;
-        }
+        preg_match_all(
+            $this->linkRegex,
+            $this->rawText,
+            $links,
+            PREG_SET_ORDER
+        );
 
         return $links;
+    }
+
+    private function makeLink(
+        string $targetTitle,
+        string $displayText = null
+    ): string {
+        $url = route("page.view", ["slug" => urlencode($targetTitle)]);
+
+        // Check if page exists
+        $class = "";
+        if (DB::table("pages")->where("title", $targetTitle)->count() < 1) {
+            $class = ' class="redlink"';
+        }
+
+        if (!$displayText) {
+            $displayText = $targetTitle;
+        }
+        return "<a href=\"{$url}\"{$class}>{$displayText}</a>";
+    }
+
+    public function parse(): string
+    {
+        $rawText = $this->rawText;
+        $newText = preg_replace_callback(
+            $this->linkRegex,
+            fn($match) => $this->makeLink($match[1], $match[2]),
+            $rawText
+        );
+
+        return $newText;
     }
 }

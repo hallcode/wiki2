@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Parsers\LinkParser;
 use App\Traits\HasVersions;
 use App\Traits\TracksChanges;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -18,6 +19,8 @@ class Page extends Model
     use HasVersions;
     use TracksChanges;
     use SoftDeletes;
+
+    protected static $dontTrack = ["updated"];
 
     public function categories(): BelongsToMany
     {
@@ -81,6 +84,59 @@ class Page extends Model
     public function redirectTo(): BelongsTo
     {
         return $this->belongsTo(Page::class, "redirect_to");
+    }
+
+    /**
+     * Make the title pretty
+     */
+    protected function content(): Attribute
+    {
+        return Attribute::make(set: fn(string $value) => Str::apa($value));
+    }
+
+    public function calculateLinks($text = null)
+    {
+        if ($text == null) {
+            $text = $this->currentVersion->content;
+        }
+        // Delete existing links before we recalculate
+        PageLink::where("parent_page_id", $this->id)->delete();
+
+        $parser = new LinkParser($text);
+        $links = $parser->getLinks();
+        foreach ($links as $link) {
+            $pageLink = new PageLink();
+            $pageLink->parent_page_id = $this->id;
+            $pageLink->link_text = $link[1];
+
+            $pageLink->target_exists = false;
+            $duplicates = PageLink::where("parent_page_id", $this->id)->where(
+                "link_text",
+                $pageLink->link_text
+            );
+
+            $targetPage = Page::where("title", $link[1])->get();
+            if ($targetPage->count() > 0) {
+                $targetPage = $targetPage->first();
+                $pageLink->target_exists = true;
+                $pageLink->target_page_id = $targetPage->id;
+
+                if ($link[2] == "") {
+                    $pageLink->link_text = $link[1];
+                } else {
+                    $pageLink->link_text = $link[2];
+                }
+
+                $duplicates->where("target_page_id", $targetPage->id);
+            }
+
+            // Check for duplicates
+            if ($duplicates->count() > 0) {
+                continue;
+            }
+
+            $pageLink->save();
+        }
     }
 
     public function slug(): Attribute

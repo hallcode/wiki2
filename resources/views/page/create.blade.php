@@ -26,7 +26,7 @@ Use this form to create a new page.
             <x-label for="title" />
             <x-error field="title" class="error" />
         </header>
-        <x-input type="text" name="title" />
+        <x-input type="text" name="title" :value="urldecode($title ?? '')"/>
     </section>
 
     <section class="field">

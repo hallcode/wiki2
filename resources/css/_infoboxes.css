@@ -1,0 +1,177 @@
+#infobox-wrapper {
+    position: relative;
+    @media screen and (min-width: 960px) {
+        > .panel {
+            position: relative;
+            display: block !important;
+        }
+
+        button {
+            display: none;
+        }
+    }
+}
+
+.infobox {
+    --infobox-header-colour: var(--blue-500);
+    --infobox-final-colour: color-mix(
+        in hsl,
+        var(--neutral-300) 70%,
+        var(--infobox-header-colour)
+    );
+
+    padding: var(--padding);
+    background-color: var(--neutral-100);
+    border: 1px solid var(--neutral-300);
+    font-size: 0.9em;
+    display: grid;
+    grid-template-columns: 4fr 2fr 6fr;
+    gap: 0.5em;
+    min-width: 250px;
+
+    @media screen and (max-width: 884px) {
+        margin: 0 auto;
+    }
+
+    @media screen and (max-width: 960px) {
+        position: absolute;
+        right: 0;
+        z-index: 100;
+        box-shadow: -2px 2px 8px var(--gray-300);
+    }
+
+    > * {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin: 0;
+    }
+
+    > header {
+        > :is(h1, h2, h3) {
+            font-size: 1.44em;
+            font-family: var(--sans-fonts);
+            border: none;
+            background-color: transparent;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        figcaption {
+            font-size: 0.9em;
+        }
+    }
+
+    h1,
+    h2 {
+        font-family: var(--sans-fonts);
+        font-size: 0.97em;
+        padding: 0 var(--padding);
+        border: none;
+    }
+
+    h1 {
+        background-color: var(--infobox-final-colour);
+        padding: 0.23em var(--padding);
+    }
+
+    h3 {
+        font-size: inherit;
+        font-family: var(--sans-fonts);
+        padding: 0;
+        border: none;
+        grid-column: 1 / 2;
+        text-align: left;
+    }
+
+    .field-content {
+        grid-column: -3 / -1;
+        text-align: left;
+
+        ul {
+            list-style: none;
+        }
+
+        ul,
+        ol {
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 0.12em;
+            }
+        }
+    }
+}
+
+.slate .infobox {
+    --infobox-header-colour: var(--slate-500);
+}
+.red .infobox {
+    --infobox-header-colour: var(--red-500);
+}
+.orange .infobox {
+    --infobox-header-colour: var(--orange-500);
+}
+.amber .infobox {
+    --infobox-header-colour: var(--amber-500);
+}
+.yellow .infobox {
+    --infobox-header-colour: var(--yellow-500);
+}
+.lime .infobox {
+    --infobox-header-colour: var(--lime-500);
+}
+.green .infobox {
+    --infobox-header-colour: var(--green-500);
+}
+.emerald .infobox {
+    --infobox-header-colour: var(--emerald-500);
+}
+.teal .infobox {
+    --infobox-header-colour: var(--teal-500);
+}
+.cyan .infobox {
+    --infobox-header-colour: var(--cyan-500);
+}
+.sky .infobox {
+    --infobox-header-colour: var(--sky-500);
+}
+.blue .infobox {
+    --infobox-header-colour: var(--blue-500);
+}
+.indigo .infobox {
+    --infobox-header-colour: var(--indigo-500);
+}
+.violet .infobox {
+    --infobox-header-colour: var(--violet-500);
+}
+.purple .infobox {
+    --infobox-header-colour: var(--purple-500);
+}
+.fuchsia .infobox {
+    --infobox-header-colour: var(--fuchsia-500);
+}
+.pink .infobox {
+    --infobox-header-colour: var(--pink-500);
+}
+.rose .infobox {
+    --infobox-header-colour: var(--rose-500);
+}
+
+#infobox-toggle {
+    transform: rotate(-90deg);
+    position: fixed;
+    right: calc(0px - var(--layout-gap));
+    height: 2.5em;
+    top: 23vmax;
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+    box-shadow: none;
+    padding: var(--margin);
+    z-index: 500;
+}
