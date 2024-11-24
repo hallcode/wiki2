@@ -7,16 +7,12 @@ use App\Http\Controllers\SpecialController;
 use App\Http\Controllers\PageTypeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get("/", function () {
-    return view("welcome");
-})
-    ->middleware(["auth", "verified"])
-    ->name("dashboard");
-
-Route::middleware("auth")->group(function () {
+Route::middleware("auth", "verified")->group(function () {
     // Special Pages
     Route::controller(SpecialController::class)->group(function () {
+        Route::get("/", "dashboard")->name("dashboard");
         Route::get("/recent-changes", "recentChanges")->name("recent-changes");
+        Route::get("/random-page", "randomPage")->name("page.random");
     });
 
     // Profile routes

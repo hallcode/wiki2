@@ -24,9 +24,33 @@
                 Upload
                 <x-heroicon-o-arrow-up-on-square-stack />
             </button>
-            <button class="menu-button">
-                <x-heroicon-c-bars-3 />
-            </button>
+            <div x-data="{ open: false }">
+                <button class="menu-button" @click="open = !open" @click.outside="open = false">
+                    <x-heroicon-c-bars-3 />
+                </button>
+                <nav x-show="open" x-transition class="user-menu">
+                    <header>
+                        <h1>User Menu</h1>
+                        <button class="menu-button" @click="open = !open" @click.outside="open = false">
+                            <x-heroicon-c-x-mark />
+                        </button>
+                    </header>
+
+                    <ul>
+                        <li>
+                            <a href="{{ route('profile.edit') }}">Profile</a>
+                        </li>
+                        <li>
+                            <a href="">Media Browser</a>
+                        </li>
+                        <li>
+                            <x-form-button action="/logout" class="link-button">
+                                Logout
+                            </x-form-button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         @else
             <a href="/login">Login</a>
         @endauth

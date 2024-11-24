@@ -40,7 +40,7 @@
                             <a href="{{ route('recent-changes') }}">Recent Changes</a>
                         </li>
                         <li>
-                            <a href="/">Random Page</a>
+                            <a href="{{ route('page.random') }}">Random Page</a>
                         </li>
                     </ul>
                 </nav>
