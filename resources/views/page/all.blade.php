@@ -6,7 +6,7 @@
 
 @push('left-tabs')
 <a href="{{ route('page.all') }}" class="active">Pages</a>
-<a href="">Categories</a>
+<a href="{{ route('cat.all') }}">Categories</a>
 @endpush
 
 @push('right-tabs')

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Version;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait HasVersions
 {
@@ -34,7 +35,7 @@ trait HasVersions
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function currentVersion()
+    public function currentVersion(): BelongsTo
     {
         return $this->belongsTo(Version::class, "version_id");
     }

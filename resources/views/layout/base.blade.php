@@ -17,7 +17,7 @@
             </nav>
         </header>
         <main class="base-wrapper @stack('page-class')">
-            <aside id="sidebar" class="left-sidebar" x-data="{ open: false }" x-show="open" x-transition @click.outside="open = false">
+            <aside id="sidebar" class="left-sidebar" x-data="{ open: false }" x-show="open" x-transition @click.outside="open = false"x-cloak>
                 <template x-teleport="#left-buttons">
                     <button id="sidebar-toggle" class="menu-button" @click="open = !open">
                         <x-heroicon-c-chevron-double-left x-show="open" />
@@ -28,13 +28,16 @@
                 <nav class="site-menu">
                     <ul class="menu-list">
                         <li>
-                            <h2>Menu</h2>
+                            <h2>Pages Menu</h2>
                         </li>
                         <li>
                             <a href="/">Home</a>
                         </li>
                         <li>
                             <a href="{{ route('page.all') }}">All Pages</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cat.all') }}">Categories</a>
                         </li>
                         <li>
                             <a href="{{ route('recent-changes') }}">Recent Changes</a>

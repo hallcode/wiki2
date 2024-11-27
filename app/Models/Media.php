@@ -15,13 +15,7 @@ class Media extends Model
     use TracksChanges;
     use HasVersions;
 
-    protected $fillable = [
-        "title",
-        "mime_type",
-        "directory",
-        "size",
-        "filename",
-    ];
+    protected $fillable = ["title", "user_id"];
 
     public function user(): BelongsTo
     {
@@ -31,5 +25,10 @@ class Media extends Model
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
+    }
+
+    public function getPath(): string
+    {
+        return implode("/", [$this->directory ?? "", $this->filename]);
     }
 }

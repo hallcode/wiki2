@@ -13,10 +13,12 @@
         <h5>{{ $key }}</h5>
         <ul class="change-list">
             @foreach($group as $change)
-            <li>
+            <li @if($change->type == 'created')style="font-weight: 700"@endif>
                 <time datetime="{{ $change->created_at }}">
                     {{ $change->created_at->format('H:i') }}
                 </time>
+
+                ({{ class_basename($change->changeable_type) }})
 
                 @if($change->changeable_type == 'App\Models\Page')
                 <a href="{{ route('page.view', ['slug' => $change->changeable->slug]) }}">

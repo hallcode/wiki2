@@ -5,11 +5,12 @@
 @extends("layout.base")
 
 @section('content')
-    <a href="{{ route('page.all') }}" class="block-link">
-        <h1>Welcome to {{ env('APP_NAME') }}!</h1>
-        <p>The secure wiki that only members can edit.</p>
-        <p>{{ $pageCount }} articles and counting.</p>
-    </a>
+
+<section class="default-box">
+    <header>Welcome to <big>{{ env('APP_NAME') }}</big>!</header>
+    <p>The secure wiki that only members can edit.</p>
+    <a href="{{ route('page.all') }}">{{ $pageCount }} articles and counting.</a>
+</section>
 
 <article class="box-grid">
     <section class="box" style="--header-colour: var(--yellow-200)">

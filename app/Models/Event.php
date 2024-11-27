@@ -16,6 +16,8 @@ class Event extends Model
 
     protected $fillable = ["title", "date", "type", "user_id"];
 
+    protected $touches = ["page"];
+
     /**
      * Get the attributes that should be cast.
      *

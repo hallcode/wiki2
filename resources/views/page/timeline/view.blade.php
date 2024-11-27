@@ -15,7 +15,6 @@
 @push('left-tabs')
 <a href="{{ route('page.view', ['slug' => $page->slug]) }}">Article</a>
 <a href="{{ route('page.timeline', ['slug' => $page->slug]) }}" class="active">Timeline</a>
-<a href="/">Data</a>
 @endpush
 
 @push('right-tabs')
@@ -33,7 +32,7 @@
         <header>There are no events on this timeline.</header>
         <p>You can create one using the 'Create Event' link at the top of this page</p>
     </div>
-    @endif
+    @else
 
     <article class="timeline">
         @foreach($events as $year => $yearEvents)
@@ -89,6 +88,8 @@
             </section>
         @endforeach
     <article>
+
+    @endif
 @endsection
 
 

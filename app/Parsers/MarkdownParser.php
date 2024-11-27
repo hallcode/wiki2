@@ -4,6 +4,7 @@ namespace App\Parsers;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
 class MarkdownParser
@@ -19,6 +20,7 @@ class MarkdownParser
 
         // Extensions
         $this->environment->addExtension(new CommonMarkCoreExtension());
+        $this->environment->addExtension(new TableExtension());
     }
 
     /**

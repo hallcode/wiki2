@@ -127,7 +127,7 @@ class PageController extends Controller
     {
         $input = $request->validate([
             "title" => ["required", "unique:" . Page::class],
-            "type" => ["required", "exists:" . PageType::class . ",id"],
+            "type" => ["required"],
         ]);
 
         $page = new Page();
@@ -135,9 +135,18 @@ class PageController extends Controller
         $page->is_locked = false;
         $page->user()->associate(auth()->user());
 
-        // We already validate that the type ID exists so we don't need to handle it here
-        $type = PageType::find($input["type"]);
-        $page->type()->associate($type);
+        if ($input["type"] == "B") {
+            $type = null;
+        } elseif ($input["type"] == "T") {
+            $type = null;
+            $page->is_template = true;
+        } elseif ($input["type"] == "R") {
+            $type = null;
+        } else {
+            $type = PageType::find($input["type"]);
+            $page->type()->associate($type);
+        }
+
         $page->save();
 
         $page->createVersion($type->template ?? "");

@@ -1,5 +1,9 @@
 @php
     $pageTitle = $page->title;
+
+    if ($page->is_template) {
+        $pageTitle = "Template: " . $page->title;
+    }
 @endphp
 
 @extends("layout.base")
@@ -7,7 +11,6 @@
 @push('left-tabs')
 <a href="{{ route('page.view', ['slug' => $page->slug]) }}" class="active">Article</a>
 <a href="{{ route('page.timeline', ['slug' => $page->slug]) }}">Timeline</a>
-<a href="/">Data</a>
 @endpush
 
 @push('right-tabs')
@@ -37,14 +40,14 @@
 @push('right-sidebar')
 <div id="infobox-wrapper" x-data={open:false} x-class="open ? 'show' ' : ''">
     <button id="infobox-toggle" @click="open = !open">Infobox</button>
-    <div class="panel" x-show="open" x-transition>
+    <div class="panel" x-show="open" x-transition x-cloak>
         {!! $version->getInfoBoxHtml() !!}
     </div>
 </div>
 @endpush
 
 @push('page-class')
-{{ $page->type->colour }}
+{{ $page->type->colour ?? "" }}
 @endpush()
 
 @section('content')
@@ -66,7 +69,7 @@
     <ul>
         @foreach($page->categories->pluck("title") as $title)
         <li>
-            <a href="/">{{ $title }}</a>
+            <a href="{{ route('cat.view', ['slug' => urlencode($title)]) }}">{{ $title }}</a>
         </li>
         @endforeach
     </ul>

@@ -28,7 +28,7 @@
                 <button class="menu-button" @click="open = !open" @click.outside="open = false">
                     <x-heroicon-c-bars-3 />
                 </button>
-                <nav x-show="open" x-transition class="user-menu">
+                <nav x-show="open" x-transition class="user-menu" x-cloak>
                     <header>
                         <h1>User Menu</h1>
                         <button class="menu-button" @click="open = !open" @click.outside="open = false">

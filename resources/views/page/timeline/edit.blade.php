@@ -18,7 +18,6 @@
 @push('left-tabs')
 <a href="{{ route('page.view', ['slug' => $page->slug]) }}">Article</a>
 <a href="{{ route('page.timeline', ['slug' => $page->slug]) }}" class="active">Timeline</a>
-<a href="/">Data</a>
 @endpush
 
 @section('content')

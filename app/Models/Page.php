@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Str;
 
 class Page extends Model
 {
@@ -89,7 +89,7 @@ class Page extends Model
     /**
      * Make the title pretty
      */
-    protected function content(): Attribute
+    protected function title(): Attribute
     {
         return Attribute::make(set: fn(string $value) => Str::apa($value));
     }

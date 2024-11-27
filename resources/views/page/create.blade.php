@@ -6,7 +6,7 @@
 
 @push('left-tabs')
 <a href="{{ route('page.all') }}">Pages</a>
-<a href="">Categories</a>
+<a href="{{ route('cat.all') }}">Categories</a>
 @endpush
 
 @push('right-tabs')
@@ -36,6 +36,9 @@ Use this form to create a new page.
         </header>
         <aside>
             <select name="type" id="type">
+                <option value="B">Blank</option>
+                <option value="T">Template</option>
+                <option value="R">Redirect</option>
                 @foreach($types as $type)
                     <option value="{{ $type->id }}">{{ $type->title }}</option>
                 @endforeach

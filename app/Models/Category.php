@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Traits\HasVersions;
 use App\Traits\TracksChanges;
 use Illuminate\Database\Eloquent\Model;
@@ -25,5 +26,10 @@ class Category extends Model
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
+    }
+
+    public function slug(): Attribute
+    {
+        return Attribute::make(get: fn() => urlencode($this->title));
     }
 }

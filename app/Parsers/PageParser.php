@@ -14,6 +14,7 @@ class PageParser
     protected bool $renderInfoBox;
 
     protected array $parsers = [
+        TemplateParser::class,
         AgeParser::class,
         NoteParser::class,
         InfoBoxParser::class,

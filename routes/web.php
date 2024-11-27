@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecialController;
 use App\Http\Controllers\PageTypeController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth", "verified")->group(function () {
@@ -22,7 +23,7 @@ Route::middleware("auth", "verified")->group(function () {
         Route::delete("/profile", "destroy")->name("profile.destroy");
     });
 
-    // Page routes
+    //*** Page routes ***
     Route::prefix("pages")
         ->controller(PageController::class)
         ->group(function () {
@@ -33,6 +34,16 @@ Route::middleware("auth", "verified")->group(function () {
             Route::get("/{slug}/edit", "edit")->name("page.edit");
             Route::post("/{slug}/edit", "update");
             Route::get("/{slug}/history", "history")->name("page.history");
+        });
+
+    //*** Category routes ***
+    Route::prefix("categories")
+        ->controller(CategoryController::class)
+        ->group(function () {
+            Route::get("/", "all")->name("cat.all");
+            Route::get("/{slug}", "view")->name("cat.view");
+            Route::get("/{id}/edit", "edit")->name("cat.edit");
+            Route::post("/{id}/edit", "save")->name("cat.save");
         });
 
     //*** Standalone events/timelines ***
