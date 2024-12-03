@@ -294,6 +294,12 @@ sup {
 }
 
 code {
+    padding: 0.23em;
+    background-color: var(--slate-700);
+    color: var(--yellow-100);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--margin);
+    display: inline-block;
 }
 
 dfn {
@@ -496,6 +502,7 @@ capabilities */
 /* - common styling */
 textarea,
 input[type="text"],
+input[type="file"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],

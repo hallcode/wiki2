@@ -13,7 +13,7 @@ trait TracksChanges
     public static function bootTracksChanges()
     {
         if (
-            isset(static::$dontTrack) &&
+            !isset(static::$dontTrack) ||
             !in_array("created", static::$dontTrack)
         ) {
             static::created(function ($model) {
@@ -22,7 +22,7 @@ trait TracksChanges
         }
 
         if (
-            isset(static::$dontTrack) &&
+            !isset(static::$dontTrack) ||
             !in_array("updated", static::$dontTrack)
         ) {
             static::updated(function ($model) {
@@ -31,7 +31,7 @@ trait TracksChanges
         }
 
         if (
-            isset(static::$dontTrack) &&
+            !isset(static::$dontTrack) ||
             !in_array("deleted", static::$dontTrack)
         ) {
             static::deleted(function ($model) {

@@ -143,4 +143,9 @@ class Page extends Model
     {
         return Attribute::make(get: fn() => urlencode($this->title));
     }
+
+    public function getUrl(): string
+    {
+        return route("page.view", ["slug" => $this->slug]);
+    }
 }

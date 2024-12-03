@@ -2,28 +2,34 @@
     <aside id="left-buttons">
     </aside>
 
-    <section class="masthead">
+    <section class="masthead" x-data="{ open: false }">
         <aside>
             {{ env('APP_NAME') }}
         </aside>
         @auth
             <form action="/search" class="site-search">
-                <input name="query" type="search">
+                <input name="full" value="true" hidden />
+                <input name="query"
+                       autocomplete="off"
+                       type="search"
+                       hx-get="/search"
+                       hx-trigger="keyup delay:300ms changed"
+                       hx-target="#search-results"
+                       @keyup="$event.target.value.length > 2 ? open = true : open = false"
+                >
                 <button>
                     <x-heroicon-c-magnifying-glass />
                     Search
                 </button>
             </form>
+            <article id="search-results" x-show="open" x-transition @click.outside="open = false" x-cloak></article>
         @endauth
     </section>
 
     <section>
         <nav class="horizontal-nav">
         @auth
-            <button>
-                Upload
-                <x-heroicon-o-arrow-up-on-square-stack />
-            </button>
+            @include('fragments.upload')
             <div x-data="{ open: false }">
                 <button class="menu-button" @click="open = !open" @click.outside="open = false">
                     <x-heroicon-c-bars-3 />
@@ -41,7 +47,7 @@
                             <a href="{{ route('profile.edit') }}">Profile</a>
                         </li>
                         <li>
-                            <a href="">Media Browser</a>
+                            <a href="{{ route('media.all') }}">Media Browser</a>
                         </li>
                         <li>
                             <x-form-button action="/logout" class="link-button">
@@ -57,3 +63,10 @@
         </nav>
     </section>
 </header>
+
+
+@push('scripts')
+<script>
+
+</script>
+@endpush

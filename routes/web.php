@@ -6,6 +6,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecialController;
 use App\Http\Controllers\PageTypeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\MediaController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth", "verified")->group(function () {
@@ -14,7 +17,25 @@ Route::middleware("auth", "verified")->group(function () {
         Route::get("/", "dashboard")->name("dashboard");
         Route::get("/recent-changes", "recentChanges")->name("recent-changes");
         Route::get("/random-page", "randomPage")->name("page.random");
+        Route::get("/search", "search")->name("search");
     });
+
+    // Files & Uploads
+    Route::controller(UploadController::class)->group(function () {
+        Route::post("/upload", "store")->name("upload");
+    });
+    Route::prefix("media")
+        ->controller(MediaController::class)
+        ->group(function () {
+            Route::get("/", "all")->name("media.all");
+            Route::get("/{slug}", "single")->name("media.view");
+            Route::get("/{slug}/width:{size}", "getThumbnail")->name(
+                "media.thumb"
+            );
+            Route::get("/{slug}/edit", "edit")->name("media.edit");
+            Route::post("/{slug}", "update")->name("media.update");
+            Route::get("/file/{fileName}", "getFile")->name("file.view");
+        });
 
     // Profile routes
     Route::controller(ProfileController::class)->group(function () {

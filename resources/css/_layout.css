@@ -177,11 +177,12 @@
 .base-wrapper {
     display: flex;
     gap: var(--layout-gap);
-    max-width: 100%;
+    min-width: 0;
 
     .article {
         flex: 1 1 100%;
         counter-reset: page-list;
+        min-width: 0;
     }
 
     .right-sidebar {
@@ -608,4 +609,62 @@ a.block-link {
 
 [x-cloak] {
     display: none !important;
+}
+
+.changes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .change {
+        flex: 1 1 100%;
+        padding: var(--padding);
+        border: 1px solid var(--border-colour);
+        margin-bottom: var(--margin);
+        border-radius: var(--border-radius);
+
+        aside {
+            float: right;
+        }
+
+        header {
+            display: flex;
+            font-size: 1.3rem;
+
+            aside {
+                margin-left: auto;
+            }
+
+            h2 {
+                font-size: inherit;
+                flex: 1 1 auto;
+                border: none;
+                margin: 0;
+            }
+        }
+    }
+
+    .date {
+        display: flex;
+        border-top: 1px solid var(--border-colour);
+        padding: var(--padding) 0;
+        margin: var(--margin) 0;
+        align-items: start;
+
+        h1 {
+            font-size: 1.5em;
+            width: 20ch;
+            border: none;
+            position: sticky;
+            top: var(--margin);
+        }
+
+        ul,
+        ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex: 1 1 auto;
+        }
+    }
 }

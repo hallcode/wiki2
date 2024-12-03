@@ -17,7 +17,9 @@ class PageController extends Controller
      */
     public function all(Request $request)
     {
-        $pages = Page::orderBy("title")
+        $pages = Page::where("is_template", false)
+            ->where("redirect_to", null)
+            ->orderBy("title")
             ->get()
             ->groupBy(function (Page $page) {
                 return strtoupper(substr($page->title, 0, 1));

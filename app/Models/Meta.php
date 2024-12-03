@@ -3,17 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Meta extends Model
 {
     protected $table = "meta";
 
-    protected $fillable = ["group", "key", "value"];
+    protected $fillable = [
+        "has_meta_type",
+        "has_meta_id",
+        "group",
+        "key",
+        "value",
+    ];
 
     public $timestamps = false;
 
-    public function hasMeta()
+    /**
+     * Get the parent model of the meta record.
+     */
+    public function hasMeta(): MorphTo
     {
-        return $this->morphs(__FUNCTION__, "has_meta_type", "has_meta_id");
+        return $this->morphTo();
     }
 }
