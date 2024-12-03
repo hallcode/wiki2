@@ -16,28 +16,27 @@
         <ol>
             @foreach ($changes as $summary)
                 <li class="change">
-                    @if(method_exists($summary->changeable, "getUrl"))
-                        <aside>
+                        {{ date_format(date_create($summary->date), "H:i") }} -
+                        @if ($summary->type == 'created')
+                            <strong>
+                        @endif
+                        {{ class_basename($summary->changeable_type) }}
+                        {{ Str::apa($summary->type) }}:
+                        @if ($summary->type == 'created')
+                            </strong>
+                        @endif
+                        @if(method_exists($summary->changeable, "getUrl"))
                             <a href="{{$summary->changeable->getUrl() }}">
-                                View {{ class_basename($summary->changeable_type) }}
+                                {{ $summary->changeable->title ?? '#'.$summary->changeable->id }}
                             </a>
-                        </aside>
-                    @endif
-                    <header>
-                        <h2>
-                            ({{ class_basename($summary->changeable_type) }})
+                        @else
                             {{ $summary->changeable->title ?? '#'.$summary->changeable->id }}
-                        </h2>
-                    </header>
-                    <p>
-                        {{ Str::apa($summary->type) }}
+                        @endif
+                        -
                         @if($summary->change_count > 1)
                         {{ $summary->change_count }} times
                         @endif
                         by {{ $summary->user->username }}
-                        at
-                        {{ date_format(date_create($summary->date), "H:i") }}
-                    </p>
                 </li>
             @endforeach
         </ol>

@@ -1,5 +1,8 @@
 <div x-data="{ open: false }">
-    <button @click="open = true">
+    <button @click="open = true"
+            hx-get="{{ route('upload') }}"
+            hx-target="#upload-wrapper"
+    >
         Upload
         <x-heroicon-o-arrow-up-on-square-stack />
     </button>

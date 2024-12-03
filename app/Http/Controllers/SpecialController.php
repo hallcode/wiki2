@@ -99,4 +99,11 @@ class SpecialController extends Controller
             "media" => $mediaResults,
         ]);
     }
+
+    public function users()
+    {
+        $users = User::all();
+
+        return view("special.users", ["users" => $users]);
+    }
 }

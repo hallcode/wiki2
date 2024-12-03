@@ -47,6 +47,9 @@
                             <a href="{{ route('profile.edit') }}">Profile</a>
                         </li>
                         <li>
+                            <a href="{{ route('users') }}">Users</a>
+                        </li>
+                        <li>
                             <a href="{{ route('media.all') }}">Media Browser</a>
                         </li>
                         <li>

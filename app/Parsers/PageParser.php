@@ -18,6 +18,7 @@ class PageParser
         AgeParser::class,
         NoteParser::class,
         InfoBoxParser::class,
+        ImageParser::class,
         LinkParser::class,
         MarkdownParser::class,
         HeadingParser::class,
@@ -36,6 +37,17 @@ class PageParser
         $config = HTMLPurifier_Config::createDefault();
         $config->set("Attr.EnableID", true);
         $purifier = new HTMLPurifier($config);
+        $config->set("HTML.DefinitionID", "enduser-customize.html tutorial");
+        $config->set("HTML.DefinitionRev", 1);
+        if ($def = $config->maybeGetRawHTMLDefinition()) {
+            $def->addElement("figcaption", "Block", "Flow", "Common");
+            $def->addElement(
+                "figure",
+                "Block",
+                "Optional: (figcaption, Flow) | (Flow, figcaption) | Flow",
+                "Common"
+            );
+        }
 
         $cleanHtml = $purifier->purify($dirtyHtml);
         return $cleanHtml;

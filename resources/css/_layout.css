@@ -615,21 +615,27 @@ a.block-link {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin);
 
     .change {
         flex: 1 1 100%;
-        padding: var(--padding);
-        border: 1px solid var(--border-colour);
         margin-bottom: var(--margin);
-        border-radius: var(--border-radius);
+
+        &:not(:first-of-type) {
+            border-top: 1px solid var(--border-colour);
+            padding-top: var(--padding);
+        }
 
         aside {
-            float: right;
+            margin-left: auto;
         }
 
         header {
             display: flex;
-            font-size: 1.3rem;
+            font-size: 1rem;
+            margin: 0;
 
             aside {
                 margin-left: auto;
@@ -640,6 +646,7 @@ a.block-link {
                 flex: 1 1 auto;
                 border: none;
                 margin: 0;
+                font-weight: 500;
             }
         }
     }
@@ -650,6 +657,7 @@ a.block-link {
         padding: var(--padding) 0;
         margin: var(--margin) 0;
         align-items: start;
+        gap: var(--layout-gap);
 
         h1 {
             font-size: 1.5em;
@@ -657,6 +665,7 @@ a.block-link {
             border: none;
             position: sticky;
             top: var(--margin);
+            line-height: 1.3em;
         }
 
         ul,

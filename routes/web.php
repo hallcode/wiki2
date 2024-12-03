@@ -15,6 +15,7 @@ Route::middleware("auth", "verified")->group(function () {
     // Special Pages
     Route::controller(SpecialController::class)->group(function () {
         Route::get("/", "dashboard")->name("dashboard");
+        Route::get("/users", "users")->name("users");
         Route::get("/recent-changes", "recentChanges")->name("recent-changes");
         Route::get("/random-page", "randomPage")->name("page.random");
         Route::get("/search", "search")->name("search");
@@ -22,6 +23,7 @@ Route::middleware("auth", "verified")->group(function () {
 
     // Files & Uploads
     Route::controller(UploadController::class)->group(function () {
+        Route::get("/upload", "getBlankForm")->name("upload");
         Route::post("/upload", "store")->name("upload");
     });
     Route::prefix("media")

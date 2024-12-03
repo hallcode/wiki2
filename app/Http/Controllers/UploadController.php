@@ -171,4 +171,9 @@ class UploadController extends Controller
             "value" => Str::ascii((string) $value),
         ]);
     }
+
+    public function getBlankForm()
+    {
+        return view("fragments.upload-form");
+    }
 }

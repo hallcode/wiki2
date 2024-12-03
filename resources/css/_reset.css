@@ -67,6 +67,7 @@ h1 {
     padding-bottom: var(--margin);
     font-size: 1.88em;
     font-weight: 500;
+    clear: both;
 }
 
 h2 {
@@ -74,6 +75,7 @@ h2 {
     padding-bottom: calc(var(--margin) * 0.75);
     font-size: 1.6em;
     font-weight: 500;
+    clear: both;
 }
 
 h3 {

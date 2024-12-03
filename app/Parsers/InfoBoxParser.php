@@ -120,7 +120,11 @@ class InfoBoxParser
 
             if ($element->hasAttribute("img")) {
                 $img = $dom->createElement("img");
-                $img->setAttribute("src", $element->getAttribute("img"));
+                $url = route("media.thumb", [
+                    "slug" => urlencode($element->getAttribute("img")),
+                    "size" => "230",
+                ]);
+                $img->setAttribute("src", $url);
                 $figure->appendChild($img);
             }
 
