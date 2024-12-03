@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Change;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Carbon\Carbon;
 
 trait TracksChanges
 {
@@ -26,7 +27,9 @@ trait TracksChanges
             !in_array("updated", static::$dontTrack)
         ) {
             static::updated(function ($model) {
-                $model->saveChange("updated");
+                if (!$model->isRecentlyCreated()) {
+                    $model->saveChange("updated");
+                }
             });
         }
 
@@ -38,6 +41,12 @@ trait TracksChanges
                 $model->saveChange("deleted");
             });
         }
+    }
+
+    public function isRecentlyCreated(): bool
+    {
+        $cuttoff = Carbon::now()->subMinutes(5);
+        return $this->created_at->greaterThan($cuttoff);
     }
 
     /**

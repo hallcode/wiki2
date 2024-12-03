@@ -85,8 +85,9 @@ class UploadController extends Controller
      */
     public function store(Request $request)
     {
+        $maxUpload = env("MAX_UPLOAD_SIZE", 2000);
         $validator = Validator::make($request->all(), [
-            "title" => "required|string|max:255|unique:media",
+            "title" => "required|string|max:{$maxUpload}|unique:media",
             "file" =>
                 "required|file|max:512000|mimetypes:" .
                 implode(",", $this->ALLOWED_MIME_TYPES),
