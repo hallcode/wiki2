@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         if (!env("ALLOW_REGISTRATIONS")) {
-            return redirect(route("login"), 403);
+            return redirect(route("login"));
         }
         return view("auth.register");
     }
@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         if (!env("ALLOW_REGISTRATIONS")) {
-            return redirect("login", 403);
+            return redirect("login");
         }
 
         $request->validate([

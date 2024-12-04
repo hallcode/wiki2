@@ -8,12 +8,16 @@
         display: flex;
         flex: 1 1 auto;
         margin-left: var(--layout-gap);
-        align-items: baseline;
+        align-items: center;
         gap: var(--layout-gap);
         font-family: var(--serif-fonts);
         font-size: 1.3em;
         font-variant: small-caps;
         color: var(--slate-500);
+
+        img {
+            height: 2.35em;
+        }
     }
 
     .site-search {

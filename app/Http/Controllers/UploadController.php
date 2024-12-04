@@ -108,6 +108,11 @@ class UploadController extends Controller
 
         $file = $request->file("file");
 
+        // Get and save the metadata
+        // Read the image first so if it fails we don't get a ton of mess left behind
+        // in the database.
+        $img = Image::read($file);
+
         $media = Media::create(["title" => Str::apa($request->title)]);
         $media->createVersion($request->get("description", "") ?? "");
 
@@ -130,9 +135,6 @@ class UploadController extends Controller
         $upload->mime_type = $file->getMimeType();
         $upload->size = $file->getSize();
         $upload->save();
-
-        // Get and save the metadata
-        $img = Image::read($file);
 
         $exifData = $img->exif();
         if (!empty($exifData)) {

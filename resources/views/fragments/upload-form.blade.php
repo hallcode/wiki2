@@ -12,11 +12,20 @@
           hx-post="/upload"
           hx-target="#upload-wrapper"
           hx-swap="innerHTML"
-          enctype="multipart/form-data"
+          hx-encoding='multipart/form-data'
     >
         @csrf
 
         <div id="loading-spinner" class="spinner" style="display: none;">Loading...</div>
+
+        <section id="failed" class="alert danger" style="display: none;">
+            <x-heroicon-c-x-mark />
+            <header>There was an error on the server when trying to upload your file.</header>
+            <p>
+                This is probably because the file you tried to upload could not be processed.
+                <br />Try converting it to a different format and then upload it again.
+            </p>
+        </section>
 
         @if($errors->all())
         <section class="alert danger">
@@ -60,5 +69,21 @@
     <footer>
         <button class="primary" form="upload-form">Upload</button>
         <button @click="open = false" form="upload-form" type="reset">Cancel</button>
+        <progress id='progress' value='0' max='100'></progress>
+
     </footer>
 </section>
+<script>
+htmx.on('#upload-form', 'htmx:xhr:progress', function(evt) {
+    htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+});
+</script>
+<script>
+    document.body.addEventListener("htmx:responseError", function (event) {
+        if (event.detail.xhr.status === 500) {
+            // Display an error message to the user
+            const errorContainer = document.getElementById("failed");
+            errorContainer.style.display = "grid"; // Ensure the message is visible
+        }
+    });
+</script>

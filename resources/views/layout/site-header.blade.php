@@ -4,7 +4,7 @@
 
     <section class="masthead" x-data="{ open: false }">
         <aside>
-            {{ env('APP_NAME') }}
+            <img src="{{ asset('storage/'.env('LOGO_PATH')) }}" alt="{{ env('APP_NAME') }}">
         </aside>
         @auth
             <form action="/search" class="site-search">
