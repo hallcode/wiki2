@@ -45,6 +45,10 @@ trait TracksChanges
 
     public function isRecentlyCreated(): bool
     {
+        if (empty($this->created_at)) {
+            return true;
+        }
+
         $cuttoff = Carbon::now()->subMinutes(5);
         return $this->created_at->greaterThan($cuttoff);
     }
