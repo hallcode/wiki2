@@ -14,6 +14,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     @stack('head')
     @bukStyles
 
