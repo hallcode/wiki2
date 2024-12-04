@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 class Upload extends Model
 {
@@ -56,8 +57,18 @@ class Upload extends Model
 
     public function getDimensions()
     {
+        if (!$this->canReadImage()) {
+            return ["height" => "?", "width" => "?"];
+        }
+
         $file = $this->getRaw();
         $img = Image::read($file);
         return ["height" => $img->height(), "width" => $img->width()];
+    }
+
+    public function canReadImage()
+    {
+        $driver = new Driver();
+        return $driver->supports($this->mime_type);
     }
 }

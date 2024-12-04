@@ -11,6 +11,7 @@ use App\Models\Media;
 use App\Models\Meta;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 class UploadController extends Controller
 {
@@ -108,10 +109,19 @@ class UploadController extends Controller
 
         $file = $request->file("file");
 
-        // Get and save the metadata
-        // Read the image first so if it fails we don't get a ton of mess left behind
-        // in the database.
-        $img = Image::read($file);
+        // Check if this is an image, and if its one we can read
+        $driver = new Driver();
+        $mimeType = $file->getMimeType();
+        $isImage = explode("/", $mimeType)[0] == "image";
+        if ($isImage && !$driver->supports($file->getMimeType())) {
+            return response()->view(
+                "fragments.upload-form",
+                [
+                    "imageError" => true,
+                ],
+                200
+            );
+        }
 
         $media = Media::create(["title" => Str::apa($request->title)]);
         $media->createVersion($request->get("description", "") ?? "");
@@ -136,13 +146,16 @@ class UploadController extends Controller
         $upload->size = $file->getSize();
         $upload->save();
 
-        $exifData = $img->exif();
-        if (!empty($exifData)) {
-            foreach ($img->exif() as $tag => $value) {
-                try {
-                    $this->storeExifMeta($media->id, $tag, $value);
-                } catch (Exception $e) {
-                    continue;
+        if ($isImage) {
+            $img = Image::read($file);
+            $exifData = $img->exif();
+            if (!empty($exifData)) {
+                foreach ($img->exif() as $tag => $value) {
+                    try {
+                        $this->storeExifMeta($media->id, $tag, $value);
+                    } catch (Exception $e) {
+                        continue;
+                    }
                 }
             }
         }

@@ -39,6 +39,16 @@
         </section>
         @endif
 
+        @if(isset($imageError))
+        <section class="alert danger">
+            <x-heroicon-c-x-mark />
+            <header>There was a problem.</header>
+            <ul>
+                <li>The format of the image you tried to upload is not supported.</li>
+            </ul>
+        </section>
+        @endif
+
         <section class="field">
             <header>
                 <x-label for="file" />

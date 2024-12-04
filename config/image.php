@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Image Driver
@@ -16,7 +15,7 @@ return [
     |
     */
 
-    'driver' => \Intervention\Image\Drivers\Gd\Driver::class,
+    "driver" => \Intervention\Image\Drivers\Imagick\Driver::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -34,9 +33,9 @@ return [
     | - "blendingColor" Defines the default blending color.
     */
 
-    'options' => [
-        'autoOrientation' => true,
-        'decodeAnimation' => true,
-        'blendingColor' => 'ffffff',
-    ]
+    "options" => [
+        "autoOrientation" => true,
+        "decodeAnimation" => true,
+        "blendingColor" => "ffffff",
+    ],
 ];

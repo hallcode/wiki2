@@ -56,7 +56,12 @@ class Media extends Model
 
         // If it's an image, create the thumbnail
         if ($this->getFileType() == "image") {
-            $file = $this->getFile()->getRaw();
+            $upload = $this->getFile();
+            if (!$upload->canReadImage()) {
+                return false;
+            }
+
+            $file = $upload->getRaw();
             $image = Image::read($file);
             $image = $image->scaleDown(width: $size);
             $folderName = Str::snake($this->title);
