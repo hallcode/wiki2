@@ -18,15 +18,10 @@ class NoteParser
 
     protected function makeSupElement(array $note)
     {
-        return '<sup class="ref" title="' .
-            $note["text"] .
-            '"><a href="#' .
-            $note["type"] .
-            "__" .
-            $note["key"] .
-            '">[' .
-            $note["key"] .
-            "]</a></sup>";
+        $text = $note["key"];
+        $url = "#" . $note["type"] . "__" . $note["key"];
+
+        return "<a class=\"sup\" href=\"$url\" title=\"$text\">[$text]</a>";
     }
 
     protected function makeListItem(array $note)

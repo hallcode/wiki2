@@ -18,8 +18,8 @@ class PageParser
         AgeParser::class,
         NoteParser::class,
         InfoBoxParser::class,
-        ImageParser::class,
         LinkParser::class,
+        ImageParser::class,
         MarkdownParser::class,
         HeadingParser::class,
     ];
@@ -40,7 +40,7 @@ class PageParser
         $config->set("HTML.DefinitionID", "enduser-customize.html tutorial");
         $config->set("HTML.DefinitionRev", 1);
         if ($def = $config->maybeGetRawHTMLDefinition()) {
-            $def->addElement("figcaption", "Block", "Flow", "Common", "sup");
+            $def->addElement("figcaption", "Block", "Flow", "Common");
             $def->addElement(
                 "figure",
                 "Block",
