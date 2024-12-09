@@ -13,21 +13,18 @@
 }
 
 .infobox {
-    --infobox-header-colour: var(--blue-500);
-    --infobox-final-colour: color-mix(
-        in hsl,
-        var(--neutral-300) 70%,
-        var(--infobox-header-colour)
-    );
+    --infobox-colour: var(--blue-500);
 
-    padding: var(--padding);
+    --infobox-h1-mix-colour: color-mix(in hsl, #fff 45%, var(--infobox-colour));
+    --infobox-h2-mix-colour: color-mix(in hsl, #fff 65%, var(--infobox-colour));
+
     background-color: var(--neutral-100);
     border: 1px solid var(--neutral-300);
     font-size: 0.9em;
-    display: grid;
-    grid-template-columns: 4fr 2fr 6fr;
-    gap: 0.5em;
     min-width: 250px;
+    padding: 0;
+    border-collapse: separate;
+    border-spacing: 0.33rem;
 
     @media screen and (max-width: 884px) {
         margin: 0 auto;
@@ -46,120 +43,112 @@
         margin: 0;
     }
 
-    > header {
-        > :is(h1, h2, h3) {
-            font-size: 1.44em;
-            font-family: var(--sans-fonts);
-            border: none;
-            background-color: transparent;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            max-height: 200px;
-        }
-
-        figcaption {
-            font-size: 0.9em;
-        }
+    img {
+        max-width: 90%;
+        max-height: 200px;
+        object-fit: cover;
     }
 
     h1,
     h2 {
-        font-family: var(--sans-fonts);
-        font-size: 0.97em;
-        padding: 0 var(--padding);
         border: none;
-    }
-
-    h1 {
-        background-color: var(--infobox-final-colour);
-        padding: 0.23em var(--padding);
-    }
-
-    h3 {
-        font-size: inherit;
-        font-family: var(--sans-fonts);
         padding: 0;
+        margin: 0.23em 0;
+        font-size: 1.3rem;
+        font-family: var(--sans-fonts);
+    }
+
+    td,
+    th,
+    tbody,
+    thead,
+    tr {
+        background-color: transparent;
         border: none;
-        grid-column: 1 / 2;
+        vertical-align: top;
+        padding: 0;
+    }
+
+    .level_1 {
+        background-color: var(--infobox-h1-mix-colour);
+        padding: 0.16em 0;
+    }
+
+    .level_2 {
+        background-color: var(--infobox-h2-mix-colour);
+        padding: 0.16em 0;
+    }
+
+    .field th,
+    .field td {
         text-align: left;
     }
 
-    .field-content {
-        grid-column: -3 / -1;
-        text-align: left;
+    ul,
+    ol {
+        padding: 0;
+        padding-left: 1ch;
+    }
 
-        ul {
-            list-style: none;
-        }
-
-        ul,
-        ol {
-            padding: 0;
-            margin: 0;
-
-            li {
-                margin-bottom: 0.12em;
-            }
-        }
+    p {
+        margin: 0;
+        padding: 0;
     }
 }
 
 .slate .infobox {
-    --infobox-header-colour: var(--slate-500);
+    --infobox-colour: var(--slate-500);
 }
 .red .infobox {
-    --infobox-header-colour: var(--red-500);
+    --infobox-colour: var(--red-500);
 }
 .orange .infobox {
-    --infobox-header-colour: var(--orange-500);
+    --infobox-colour: var(--orange-500);
 }
 .amber .infobox {
-    --infobox-header-colour: var(--amber-500);
+    --infobox-colour: var(--amber-500);
 }
 .yellow .infobox {
-    --infobox-header-colour: var(--yellow-500);
+    --infobox-colour: var(--yellow-500);
 }
 .lime .infobox {
-    --infobox-header-colour: var(--lime-500);
+    --infobox-mix-colour: var(--lime-500);
 }
 .green .infobox {
-    --infobox-header-colour: var(--green-500);
+    --infobox-colour: var(--green-500);
 }
 .emerald .infobox {
-    --infobox-header-colour: var(--emerald-500);
+    --infobox-colour: var(--emerald-500);
 }
 .teal .infobox {
-    --infobox-header-colour: var(--teal-500);
+    --infobox-colour: var(--teal-500);
 }
 .cyan .infobox {
-    --infobox-header-colour: var(--cyan-500);
+    --infobox-colour: var(--cyan-500);
 }
 .sky .infobox {
-    --infobox-header-colour: var(--sky-500);
+    --infobox-colour: var(--sky-500);
 }
 .blue .infobox {
-    --infobox-header-colour: var(--blue-500);
+    --infobox-colour: var(--blue-500);
 }
 .indigo .infobox {
-    --infobox-header-colour: var(--indigo-500);
+    --infobox-colour: var(--indigo-500);
 }
 .violet .infobox {
-    --infobox-header-colour: var(--violet-500);
+    --infobox-colour: var(--violet-500);
 }
 .purple .infobox {
-    --infobox-header-colour: var(--purple-500);
+    --infobox-colour: var(--purple-500);
 }
 .fuchsia .infobox {
-    --infobox-header-colour: var(--fuchsia-500);
+    --infobox-colour: var(--fuchsia-500);
 }
 .pink .infobox {
-    --infobox-header-colour: var(--pink-500);
+    --infobox-colour: var(--pink-500);
 }
 .rose .infobox {
-    --infobox-header-colour: var(--rose-500);
+    --infobox-colour: var(--rose-500);
 }
 
 #infobox-toggle {

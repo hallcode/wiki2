@@ -2,19 +2,15 @@
 
 namespace App\Parsers;
 
-use DOMDocument, DOMElement;
 use Illuminate\Support\Facades\DB;
 
 class InfoBoxParser
 {
     protected string $rawText;
     protected string $bodyText;
-    protected DOMDocument $dom;
+    protected string $infoBoxMarkup = "";
     protected bool $returnInfoBox;
-    protected array $infoBoxes = [];
-
-    // Options
-    private $infoBoxTag = "InfoBox";
+    protected string $infoboxPattern = "/<InfoBox(.+)>(.*?)<\/InfoBox>/msUi";
 
     public function __construct(string $rawText, $infoBox = false)
     {
@@ -27,136 +23,109 @@ class InfoBoxParser
         if (!$this->returnInfoBox) {
             // We're parsing the page so we only need the clean body text.
             $this->bodyText = preg_replace(
-                "/<InfoBox\b[^>]*>.*?<\/InfoBox>/s",
+                $this->infoboxPattern,
                 "",
                 $this->rawText
             );
             return;
         }
 
-        $dom = new DOMDocument();
-        $dom->preserveWhiteSpace = true;
-        if (!$dom->loadXML("<root>{$this->rawText}</root>")) {
-            throw new \RuntimeException(
-                "Failed to parse XML: Input might be invalid."
-            );
-        }
+        // If we need the infobox too, then we better get that text:
+        $matches = [];
+        preg_match_all(
+            $this->infoboxPattern,
+            $this->rawText,
+            $matches,
+            PREG_PATTERN_ORDER
+        );
 
-        $infoBoxes = $dom->getElementsByTagName($this->infoBoxTag);
-        foreach ($infoBoxes as $infoBox) {
-            $this->infoBoxes[] = $infoBox;
+        foreach ($matches[0] as $m) {
+            $this->infoBoxMarkup .= $m;
         }
     }
 
-    protected function renderInfoBox(DOMElement $element)
+    protected function renderInfoBox(array $matches): string
     {
-        $dom = $this->dom;
-        $dom->preserveWhiteSpace = true;
-
-        $infobox = $dom->createElement("article");
-        $infobox->setAttribute("class", "infobox");
-
-        // Header
-        $infobox->appendChild($this->renderHeader($element));
-
-        // All the children
-        foreach ($element->childNodes as $child) {
-            if ($child->nodeType !== XML_ELEMENT_NODE) {
-                continue;
-            }
-
-            if ($child->nodeName === "Title") {
-                $level = $child->getAttribute("level") ?? "1";
-                $el = $level == "1" ? "h1" : "h2";
-                $new = $dom->createElement($el, $child->textContent);
-                $infobox->appendChild($new);
-                continue;
-            }
-
-            if ($child->nodeName === "Field") {
-                $title = $child->getAttribute("title");
-                $el = $dom->createElement("h3", $title);
-                $infobox->appendChild($el);
-
-                // Get child nodes and create a container element
-                $in = $dom->importNode($child, true);
-                $in->normalize();
-                $content = $dom->createElement("section");
-                $content->setAttribute("class", "field-content");
-
-                // Create and prepend two EOL nodes, this is to ensure that the Markdown
-                // Parser understands that the content should be treated as a new paragraph.
-                $eol = $dom->createTextNode(PHP_EOL);
-                $content->append($eol, $eol, ...$in->childNodes);
-                $infobox->appendChild($content);
-                continue;
-            }
-
-            $in = $dom->importNode($child, true);
-            $infobox->appendChild($in);
-        }
-
-        $dom->appendChild($infobox);
-        $html = $dom->saveHTML();
-        $html = str_replace(["<root>", "</root>"], "", $html);
-
-        return $html;
+        $header = $this->renderHeader($matches[1]);
+        return "<table class=\"infobox\">$header<tbody>$matches[2]</tbody></table>";
     }
 
-    protected function renderHeader(DOMElement $element)
+    protected function renderHeader(string $attrs): string
     {
-        // Header
-        $dom = $this->dom;
-
-        $header = $dom->createElement("header");
-        if ($element->hasAttribute("title")) {
-            $title = $dom->createElement("h1", $element->getAttribute("title"));
-            $header->appendChild($title);
+        if (empty($attrs)) {
+            return "";
         }
-        if ($element->hasAttribute("img")) {
-            $img = $dom->createElement("img");
 
-            $figure = $dom->createElement("figure");
+        $markup = "";
+        $attrPattern = '/([a-zA-Z]+)="([^"<>]+)"/siUm';
+        $matches = [];
+        preg_match_all($attrPattern, $attrs, $matches, PREG_SET_ORDER);
 
-            if ($element->hasAttribute("img")) {
-                $img = $dom->createElement("img");
+        foreach ($matches as $attr) {
+            if ($attr[1] == "title") {
+                $markup .= "<tr><th colspan=\"2\"><h1>$attr[2]</h1></th></tr>";
+            }
+
+            if ($attr[1] == "caption") {
+                $markup .= "<tr><td colspan=\"2\" class=\"caption\">$attr[2]</td></tr>";
+            }
+
+            if ($attr[1] == "img") {
                 $url = route("media.thumb", [
-                    "slug" => urlencode($element->getAttribute("img")),
-                    "size" => "230",
+                    "slug" => urlencode($attr[2]),
+                    "size" => 300,
                 ]);
-                $img->setAttribute("src", $url);
-                $figure->appendChild($img);
+                $markup .= "<tr><th colspan=\"2\"><img src=\"$url\" /></th></tr>";
+                continue;
             }
-
-            if ($element->hasAttribute("caption")) {
-                $caption = $dom->createElement(
-                    "figcaption",
-                    $element->getAttribute("caption")
-                );
-                $figure->appendChild($caption);
-            }
-
-            $header->appendChild($figure);
         }
 
-        return $header;
+        return "<thead>" . $markup . "</thead>";
+    }
+
+    protected function renderTitle(array $matches): string
+    {
+        return "<tr><th colspan=\"2\" class=\"level_$matches[1]\">$matches[2]</th></tr>";
+    }
+
+    protected function renderField(array $matches): string
+    {
+        return "<tr class=\"field\"><th>$matches[1]</th><td>\n$matches[2]\n</td></tr>";
+    }
+
+    protected function renderAnythingElse(string $tag, string $contents): string
+    {
+        if (strtolower($tag) == "title") {
+            return "<tr><th colspan=\"2\">$contents</th></tr>";
+        }
+
+        return "<tr><td colspan=\"2\">$contents</td></tr>";
     }
 
     public function parse(): string
     {
         $this->extractMarkup();
 
-        $this->dom = new DOMDocument();
-
-        if ($this->returnInfoBox) {
-            $infoBoxRender = "";
-            foreach ($this->infoBoxes as $infoBoxElement) {
-                $html = $this->renderInfoBox($infoBoxElement);
-                $infoBoxRender .= $html;
-            }
-            return $infoBoxRender;
+        if (!$this->returnInfoBox) {
+            return $this->bodyText;
         }
 
-        return $this->bodyText;
+        $this->infoBoxMarkup = preg_replace_callback_array(
+            [
+                $this->infoboxPattern => fn($m) => $this->renderInfoBox($m),
+                '/<Title level="([0-9]+)">(.+)<\/Title>/msUi' => fn(
+                    $m
+                ) => $this->renderTitle($m),
+                '/<Field title="([^<>\/"]+)">(.+)<\/Field>/msUi' => fn(
+                    $m
+                ) => $this->renderField($m),
+                "/<(Field|p|Title)>([^<>]+)<\/(?:Field|Title|p)>/msUi" => fn(
+                    $m
+                ) => $this->renderAnythingElse($m[1], $m[2]),
+            ],
+            $this->infoBoxMarkup
+        );
+
+        return $this->infoBoxMarkup;
     }
 }

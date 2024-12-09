@@ -22,10 +22,10 @@ Colour scheme and other settings
     --border-colour: var(--neutral-300);
 
     /* Layout */
-    --layout-gap: 1.66vmax;
-    --small-padding: 0.22vmax;
-    --padding: 0.66vmax;
-    --margin: 0.88vmax;
-    --big-margin: 2.14vmax;
+    --layout-gap: 1.33vmax;
+    --small-padding: 0.33rem;
+    --padding: 0.5rem;
+    --margin: 0.66rem;
+    --big-margin: 1.5rem;
     --sidebar-width: 200px;
 }
