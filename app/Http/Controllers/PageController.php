@@ -115,11 +115,13 @@ class PageController extends Controller
     {
         if ($request->has("title")) {
             return view("page.create", [
-                "types" => PageType::all(),
+                "types" => PageType::orderBy("title")->get(),
                 "title" => $request->get("title"),
             ]);
         }
-        return view("page.create", ["types" => PageType::all()]);
+        return view("page.create", [
+            "types" => PageType::orderBy("title")->get(),
+        ]);
     }
 
     /**

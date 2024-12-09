@@ -20,7 +20,7 @@ class MediaController extends Controller
 
     public function single(string $slug)
     {
-        $title = urldecode($slug);
+        $title = Str::apa(urldecode($slug));
         $media = Media::where("title", $title)->firstOrFail();
         return view("media.single", ["media" => $media]);
     }

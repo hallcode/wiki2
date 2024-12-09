@@ -193,6 +193,14 @@
             margin-bottom: 0.33em;
         }
 
+        h2 + h3 {
+            margin-top: 0;
+        }
+
+        h4 {
+            font-size: 1.1em;
+        }
+
         p {
             margin-bottom: 1.2em;
         }
@@ -679,6 +687,7 @@ a.block-link {
             position: sticky;
             top: var(--margin);
             line-height: 1.3em;
+            margin: 0;
         }
 
         ul,
