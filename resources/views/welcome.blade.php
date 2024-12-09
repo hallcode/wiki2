@@ -74,19 +74,14 @@
     </p>
     <section class="gallery">
     @foreach($media as $m)
-    <div x-data="{ fullScreen: false }">
-        <figure @click="fullScreen = true">
-            <img src="{{ route('media.thumb', ['slug' => urlencode($m->title), 'size' => 300]) }}" alt="{{ $m->title }}">
+        <figure>
+            <a href="{{ route('media.view', ['slug' => urlencode(Str::apa($m->title))]) }}">
+                <img src="{{ route('media.thumb', ['slug' => urlencode($m->title), 'size' => 300]) }}" alt="{{ $m->title }}">
+            </a>
             <figcaption>
             {{ $m->title }}
             </figcaption>
         </figure>
-        <div class="lightbox" x-show="fullScreen">
-            <button class="close-button" @click="fullScreen = false">Close</button>
-            <img src="{{ route('media.thumb', ['slug' => urlencode($m->title), 'size' => 800]) }}" alt="{{ $m->title }}">
-            <header>{{ $m->title }}</header>
-        </div>
-    </div>
     @endforeach
     </section>
 </article>

@@ -3,6 +3,7 @@
 namespace App\Parsers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class InfoBoxParser
 {
@@ -72,10 +73,13 @@ class InfoBoxParser
 
             if ($attr[1] == "img") {
                 $url = route("media.thumb", [
-                    "slug" => urlencode($attr[2]),
+                    "slug" => urlencode(Str::apa($attr[2])),
                     "size" => 300,
                 ]);
-                $markup .= "<tr><th colspan=\"2\"><img src=\"$url\" /></th></tr>";
+                $linkUrl = route("media.view", [
+                    "slug" => urlencode(Str::apa($attr[2])),
+                ]);
+                $markup .= "<tr><th colspan=\"2\"><a href=\"$linkUrl\"><img src=\"$url\" /></a></th></tr>";
                 continue;
             }
         }

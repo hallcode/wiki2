@@ -26,20 +26,49 @@ class ImageParser
             $size = "200";
         }
 
+        $imageTag = $this->renderImg($size, $imageName);
+
+        return PHP_EOL .
+            $this->renderFigure(
+                $caption,
+                $this->renderLink($imageName, $imageTag, $size),
+                $size
+            ) .
+            PHP_EOL .
+            PHP_EOL;
+    }
+
+    protected function renderImg(string $size, string $imageName)
+    {
         $url = route("media.thumb", [
-            "slug" => urlencode($imageName),
+            "slug" => urlencode(Str::apa($imageName)),
             "size" => $size,
         ]);
-        $imgTag = "<img width=\"{$size}\" height=\"auto\" src=\"{$url}\" />";
 
+        return "<img src=\"$url\" />";
+    }
+
+    protected function renderLink(
+        string $imageName,
+        string $contents,
+        string $size
+    ) {
+        $url = route("media.view", [
+            "slug" => urlencode(Str::apa($imageName)),
+        ]);
+        return "<a href=\"$url\">$contents</a>";
+    }
+
+    protected function renderFigure(
+        string $caption,
+        string $contents,
+        string $size
+    ) {
         $captionTag = "";
         if (!empty($caption)) {
             $captionTag = "<figcaption>$caption</figcaption>";
         }
-
-        $figure = "<figure class=\"inline-image\" style=\"max-width: {$size}px\">{$imgTag}{$captionTag}</figure>";
-        $anchorUrl = route("media.view", ["slug" => urlencode($imageName)]);
-        return "<a href=\"$anchorUrl\">$figure</a>" . PHP_EOL . PHP_EOL;
+        return "<figure class=\"inline-image\" style=\"max-width: {$size}px\">{$contents}{$captionTag}</figure>";
     }
 
     public function parse(): string
