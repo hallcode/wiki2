@@ -15,6 +15,11 @@
         <h1>{{ $date }}</h1>
         <ol>
             @foreach ($changes as $summary)
+                @php
+                    if (empty($summary->changeable)) {
+                        continue;
+                    }
+                @endphp
                 <li class="change">
                     <p>
                         @if(method_exists($summary->changeable, "getUrl"))
