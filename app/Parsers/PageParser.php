@@ -2,8 +2,6 @@
 
 namespace App\Parsers;
 
-use App\Parsers\LinkParser;
-use App\Parsers\MarkdownParser;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
@@ -15,6 +13,7 @@ class PageParser
 
     protected array $parsers = [
         TemplateParser::class,
+        GalleryParser::class,
         AgeParser::class,
         NoteParser::class,
         InfoBoxParser::class,

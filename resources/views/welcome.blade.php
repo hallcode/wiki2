@@ -72,17 +72,19 @@
     <p>
         <a href="{{ route('media.all') }}">See all</a>
     </p>
-    <section class="gallery">
-    @foreach($media as $m)
-        <figure>
-            <a href="{{ route('media.view', ['slug' => urlencode(Str::apa($m->title))]) }}">
-                <img src="{{ route('media.thumb', ['slug' => urlencode($m->title), 'size' => 300]) }}" alt="{{ $m->title }}">
-            </a>
-            <figcaption>
-            {{ $m->title }}
-            </figcaption>
-        </figure>
-    @endforeach
+    <section class="gallery-wrapper">
+        <div class="gallery">
+            @foreach($media as $m)
+                <figure>
+                    <a href="{{ route('media.view', ['slug' => urlencode(Str::apa($m->title))]) }}">
+                        <img src="{{ route('media.thumb', ['slug' => urlencode(Str::apa($m->title)), 'size' => 300]) }}" alt="{{ $m->title }}">
+                    </a>
+                    <figcaption>
+                    {{ $m->title }}
+                    </figcaption>
+                </figure>
+            @endforeach
+        </div>
     </section>
 </article>
 

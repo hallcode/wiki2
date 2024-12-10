@@ -137,12 +137,31 @@
     margin: var(--margin) 0;
 }
 
+.gallery-wrapper {
+    &:after {
+        content: " ";
+        background: transparent;
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 1) 100%
+        );
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 50px;
+    }
+}
+
 .gallery {
     display: flex;
     overflow: scroll;
     max-width: 100%;
     min-width: 0;
     gap: 0.5ch;
+    padding-right: 50px;
 
     figure {
         cursor: pointer;
