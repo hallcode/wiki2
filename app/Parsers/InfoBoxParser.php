@@ -45,6 +45,11 @@ class InfoBoxParser
         }
     }
 
+    protected function padContents(string $contents): string
+    {
+        return PHP_EOL . PHP_EOL . $contents . PHP_EOL . PHP_EOL;
+    }
+
     protected function renderInfoBox(array $matches): string
     {
         $header = $this->renderHeader($matches[1]);
@@ -89,21 +94,25 @@ class InfoBoxParser
 
     protected function renderTitle(array $matches): string
     {
-        return "<tr><th colspan=\"2\" class=\"level_$matches[1]\">$matches[2]</th></tr>";
+        $content = trim($matches[2]);
+        return "<tr><th colspan=\"2\" class=\"level_$matches[1]\">$content</th></tr>";
     }
 
     protected function renderField(array $matches): string
     {
-        return "<tr class=\"field\"><th>$matches[1]</th><td>\n$matches[2]\n</td></tr>";
+        $content = $this->padContents($matches[2]);
+        return "<tr class=\"field\"><th>$matches[1]</th><td>$content</td></tr>";
     }
 
     protected function renderAnythingElse(string $tag, string $contents): string
     {
+        $content = $this->padContents($contents);
+
         if (strtolower($tag) == "title") {
             return "<tr><th colspan=\"2\">$contents</th></tr>";
         }
 
-        return "<tr><td colspan=\"2\">$contents</td></tr>";
+        return "<tr><td colspan=\"2\">$content</td></tr>";
     }
 
     public function parse(): string
