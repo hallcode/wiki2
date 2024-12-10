@@ -15,7 +15,7 @@
         padding: var(--padding);
         text-align: center;
         font-size: 1.5rem;
-        z-index: 50;
+        z-index: 150;
     }
 
     .month-section {
@@ -36,6 +36,7 @@
         padding: 0;
         list-style: none;
         flex: 1 1 auto;
+        min-width: 0;
     }
 
     .details {
@@ -43,6 +44,7 @@
         align-items: start;
         gap: var(--margin);
         margin-bottom: var(--margin);
+        min-width: 0;
 
         @media screen and (max-width: 644px) {
             flex-wrap: wrap;
@@ -50,6 +52,7 @@
 
         > div {
             flex: 1 1 100%;
+            min-width: 0;
         }
     }
 
@@ -58,12 +61,14 @@
         margin: 0;
         padding: 0;
         flex: 1 1 auto;
+        min-width: 0;
     }
 
     .date-section {
         display: flex;
         align-items: start;
         margin-bottom: var(--margin);
+        min-width: 0;
     }
 
     .month,
