@@ -48,7 +48,7 @@
                 {{ $version->created_at->format('j F Y \@ H:i') }}
             </td>
             <td>
-                {{ $version->user->username }}
+                {!! $version->user->getTag() !!}
             </td>
             <td>
                 @if ($loop->index < count($versions) - 1)

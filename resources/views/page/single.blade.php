@@ -69,6 +69,6 @@
 Last updated
 {{ $version->created_at->diffForHumans() }}
 by
-{{ $version->user->username }}.
+{!! $version->user->getTag() !!}
 </footer>
 @endsection

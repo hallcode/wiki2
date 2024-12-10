@@ -16,7 +16,7 @@
 <figure class="media-main">
     <img src="{{ route('media.thumb', ['slug' => urlencode($media->title), 'size' => 750]) }}" alt="{{ $media->title }}">
 </figure>
-<nav class="links">
+<nav class="links" style="display: flex; justify-content: space-between">
     <code>[#{{ urlencode($media->title) }}|230|Optional caption]</code>
     <a href="{{ route('file.view', ['fileName' => $media->getFile()->file_name]) }}">View Original</a>
 </nav>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td>Uploaded by</td>
-                <td>{{ $media->getFile()->user->username }}</td>
+                <td>{!! $media->getFile()->user->getTag() !!}</td>
             </tr>
             <tr>
                 <td>Uploaded on</td>

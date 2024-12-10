@@ -46,6 +46,11 @@
                             <li>
                                 <a href="{{ route('page.random') }}">Random Page</a>
                             </li>
+                            <li>
+                                <a href="{{ route('page.create') }}">
+                                    Create Page
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </aside>

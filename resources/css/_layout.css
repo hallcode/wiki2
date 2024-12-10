@@ -761,7 +761,8 @@ a.block-link {
 }
 
 .user-tag {
-    display: flex;
+    display: inline-flex;
+    vertical-align: middle;
     gap: 0.5ch;
     align-items: center;
     padding: 0.12em 0.66em 0.12em 0.33em;
@@ -769,11 +770,19 @@ a.block-link {
     background-color: var(--slate-100);
     user-select: none;
     border-radius: 1em;
+    flex: 0 0 auto;
+    width: fit-content;
+    color: var(--slate-700);
 
     &:is(a) {
+        color: var(--blue-700);
+        border: 1px solid var(--blue-300);
+        background-color: var(--blue-100);
+
         &:hover {
-            border: 1px solid var(--slate-400);
-            background-color: var(--slate-200);
+            border: 1px solid var(--blue-400);
+            background-color: var(--blue-200);
+            color: var(--blue-800);
             text-decoration: none;
         }
     }
