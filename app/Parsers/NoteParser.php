@@ -94,8 +94,9 @@ class NoteParser
             $newText
         );
 
-        $noteSection = "<h2>Notes</h2><ol class=\"reference-list\">";
-        $citeSection = "<h2>References</h2><ol class=\"reference-list\">";
+        $noteSection = PHP_EOL . "<h2>Notes</h2><ol class=\"reference-list\">";
+        $citeSection =
+            PHP_EOL . "<h2>References</h2><ol class=\"reference-list\">";
         $nCount = 0;
         $cCount = 0;
         foreach ($this->notes as $note) {
@@ -117,6 +118,6 @@ class NoteParser
         if ($cCount > 0) {
             $newText .= $citeSection;
         }
-        return $newText;
+        return PHP_EOL . $newText;
     }
 }
