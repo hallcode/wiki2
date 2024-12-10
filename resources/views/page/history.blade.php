@@ -1,25 +1,18 @@
 @php
     $pageTitle = 'History: ' . $page->title;
-    $versions = $page->versions()->orderBy('created_at', 'desc')->get();
+    $versions = $page->versions()->orderBy('created_at', 'desc')->limit(50)->get();
 @endphp
 
-@extends("layout.base")
-
-@push('left-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}" class="active">Article</a>
-<a href="{{ route('page.timeline', ['slug' => $page->slug]) }}">Timeline</a>
-@endpush
-
-@push('right-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}">Read</a>
-<a href="{{ route('page.edit', ['slug' => $page->slug]) }}">Edit</a>
-<a href="{{ route('page.history', ['slug' => $page->slug]) }}" class="active">View History</a>
-@endpush
+@extends("page.layout")
 
 @section('content')
 <p>
     This page was created on the {{ $page->created_at->format('jS F Y \a\t H:i') }},
     by user {{ $page->user->username }}.
+</p>
+
+<p>
+    Below are the latest 50 revisions.
 </p>
 
 <table>
@@ -47,7 +40,7 @@
             </td>
             <td>
                 <abbr title="{{$version->id}}">
-                    ...{{ substr($version->id, 20) }}
+                    {{ $version->id }}
                 </abbr>
             </td>
             <td>

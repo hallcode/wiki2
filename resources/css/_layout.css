@@ -187,6 +187,7 @@
         flex: 1 1 100%;
         counter-reset: page-list;
         min-width: 0;
+        max-width: 100ch;
 
         :is(h1, h2, h3, h4, h5, h6) {
             margin-top: 1.33em;
@@ -203,6 +204,10 @@
 
         p {
             margin-bottom: 1.2em;
+        }
+
+        :first-child {
+            margin-top: 0;
         }
     }
 

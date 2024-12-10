@@ -57,6 +57,11 @@ Route::middleware("auth", "verified")->group(function () {
             Route::get("/{slug}/edit", "edit")->name("page.edit");
             Route::post("/{slug}/edit", "update");
             Route::get("/{slug}/history", "history")->name("page.history");
+            Route::get("/{slug}/data", "data")->name("page.data");
+            Route::put("/{slug}/data", "putData");
+            Route::delete("/{slug}/data/{id}", "deleteData")->name(
+                "page.data.delete"
+            );
         });
 
     //*** Category routes ***

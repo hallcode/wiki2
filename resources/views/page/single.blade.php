@@ -6,18 +6,7 @@
     }
 @endphp
 
-@extends("layout.base")
-
-@push('left-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}" class="active">Article</a>
-<a href="{{ route('page.timeline', ['slug' => $page->slug]) }}">Timeline</a>
-@endpush
-
-@push('right-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}" class="active">Read</a>
-<a href="{{ route('page.edit', ['slug' => $page->slug]) }}">Edit</a>
-<a href="{{ route('page.history', ['slug' => $page->slug]) }}">View History</a>
-@endpush
+@extends("page.layout")
 
 @push('sidebar')
 @if(count($version->getHeadings()) > 2)

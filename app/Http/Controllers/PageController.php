@@ -109,6 +109,15 @@ class PageController extends Controller
     }
 
     /**
+     * View a page's data.
+     */
+    public function data(string $slug)
+    {
+        $page = Page::where("title", urldecode($slug))->firstOrFail();
+        return view("page.data", ["page" => $page]);
+    }
+
+    /**
      * Display the form to create a new page
      */
     public function create(Request $request)

@@ -2,19 +2,7 @@
     $pageTitle = 'Edit: ' . $page->title;
 @endphp
 
-@extends("layout.base")
-
-@push('left-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}" class="active">Article</a>
-<a href="{{ route('page.timeline', ['slug' => $page->slug]) }}">Timeline</a>
-@endpush
-
-@push('right-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}">Read</a>
-<a href="{{ route('page.edit', ['slug' => $page->slug]) }}" class="active">Edit</a>
-<a href="{{ route('page.history', ['slug' => $page->slug]) }}">View History</a>
-@endpush
-
+@extends("page.layout")
 
 @section('content')
 <x-form action="{{ route('page.edit', ['slug' => $page->slug]) }}">

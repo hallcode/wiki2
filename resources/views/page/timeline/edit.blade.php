@@ -13,12 +13,7 @@
     }
 @endphp
 
-@extends("layout.base")
-
-@push('left-tabs')
-<a href="{{ route('page.view', ['slug' => $page->slug]) }}">Article</a>
-<a href="{{ route('page.timeline', ['slug' => $page->slug]) }}" class="active">Timeline</a>
-@endpush
+@extends("page.layout")
 
 @section('content')
 <x-form action="{{ $formRoute }}" method="post">
