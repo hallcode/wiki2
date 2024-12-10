@@ -1,35 +1,39 @@
 <header class="site-header">
-    <aside id="left-buttons">
-    </aside>
-
-    <section class="masthead" x-data="{ open: false }">
-        <aside>
-            <img src="{{ asset('storage/'.env('LOGO_PATH')) }}" alt="{{ env('APP_NAME') }}">
+    <div class="header-grid">
+        <aside id="left-buttons">
         </aside>
-        @auth
-            <form action="/search" class="site-search">
-                <input name="full" value="true" hidden />
-                <input name="query"
-                       autocomplete="off"
-                       type="search"
-                       hx-get="/search"
-                       hx-trigger="keyup delay:300ms changed"
-                       hx-target="#search-results"
-                       @keyup="$event.target.value.length > 2 ? open = true : open = false"
-                >
-                <button>
-                    <x-heroicon-c-magnifying-glass />
-                    Search
-                </button>
-            </form>
-            <article id="search-results" x-show="open" x-transition @click.outside="open = false" x-cloak></article>
-        @endauth
-    </section>
 
-    <section>
+        <a class="logo" href="/">
+            <img src="{{ asset('storage/'.env('LOGO_PATH')) }}" alt="{{ env('APP_NAME') }}">
+        </a>
+
+        <section class="search-wrapper" x-data="{ open: false }">
+            @auth
+                <form action="/search" class="site-search">
+                    <input name="full" value="true" hidden />
+                    <input name="query"
+                           autocomplete="off"
+                           type="search"
+                           hx-get="/search"
+                           hx-trigger="keyup delay:300ms changed"
+                           hx-target="#search-results"
+                           @keyup="$event.target.value.length > 2 ? open = true : open = false"
+                    >
+                    <button>
+                        <x-heroicon-c-magnifying-glass />
+                        Search
+                    </button>
+                </form>
+                <article id="search-results" x-show="open" x-transition @click.outside="open = false" x-cloak></article>
+            @endauth
+        </section>
+
+        @auth
+        @include('fragments.upload')
+        @endauth
+
         <nav class="horizontal-nav">
         @auth
-            @include('fragments.upload')
             <div x-data="{ open: false }">
                 <button class="menu-button" @click="open = !open" @click.outside="open = false">
                     <x-heroicon-c-bars-3 />
@@ -64,7 +68,7 @@
             <a href="/login">Login</a>
         @endauth
         </nav>
-    </section>
+    </div>
 </header>
 
 

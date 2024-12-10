@@ -8,7 +8,7 @@
 
     .year {
         position: sticky;
-        top: 0;
+        top: var(--site-header-height);
         background-color: var(--neutral-200);
         border-bottom: 1px solid var(--neutral-300);
         margin: 0 !important;
@@ -24,6 +24,10 @@
         align-items: start;
         margin: var(--margin) 0;
         gap: var(--margin);
+
+        @media screen and (max-width: 756px) {
+            display: block;
+        }
 
         &:not(:first-of-type) {
             border-top: 1px solid var(--neutral-400);
@@ -74,13 +78,19 @@
     .month,
     .date {
         position: sticky;
-        top: calc(38px + var(--margin));
+        top: calc(48px + var(--site-header-height));
         font-size: 1.23rem;
         font-weight: 600;
         font-family: var(--serif-fonts);
         margin: 0 !important;
         padding: 0;
         border: none;
+
+        @media screen and (max-width: 756px) {
+            position: relative;
+            top: 0;
+            margin-bottom: var(--margin) !important;
+        }
     }
 
     .month {

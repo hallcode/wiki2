@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div class="upload-button" x-data="{ open: false }">
     <button @click="open = true"
             hx-get="{{ route('upload') }}"
             hx-target="#upload-wrapper"

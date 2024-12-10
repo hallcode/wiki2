@@ -31,16 +31,13 @@ html {
 }
 
 body {
-    padding: var(--layout-gap);
-    padding-top: var(--margin);
+    position: relative;
+    padding: 0;
     margin: 0;
     font-family: var(--sans-fonts);
     font-size: var(--global-font-size);
     line-height: 1.33em;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -390,11 +387,18 @@ noscript {
 Table content
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+.table-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
 table {
+    position: relative;
     border-collapse: collapse;
     border: 1px solid var(--border-colour);
     background-color: var(--gray-100);
     margin: var(--margin) 0;
+    width: 100%;
 }
 
 caption {

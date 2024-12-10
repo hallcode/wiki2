@@ -1,33 +1,58 @@
 .site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--layout-gap);
+    position: sticky;
+    background-color: var(--slate-100);
+    border-bottom: 1px solid var(--slate-300);
+    top: 0px;
+    z-index: 800;
 
-    .masthead {
-        display: flex;
-        flex: 1 1 auto;
-        margin-left: var(--layout-gap);
+    .header-grid {
+        display: grid;
+        grid-template-columns:
+            var(--layout-gap)
+            min-content
+            150px
+            1fr
+            min-content
+            min-content
+            var(--layout-gap);
         align-items: center;
-        gap: var(--layout-gap);
-        font-family: var(--serif-fonts);
-        font-size: 1.3em;
-        font-variant: small-caps;
-        color: var(--slate-500);
+        gap: var(--margin);
+        padding: var(--padding) 0;
 
-        img {
-            height: 2.35em;
+        #left-buttons {
+            grid-column: 2 / 3;
+            width: fit-content;
         }
+
+        .logo {
+            grid-column: 3 / 4;
+
+            img {
+                max-height: 2.5em;
+                width: 100%;
+                object-fit: contain;
+                object-position: center center;
+            }
+        }
+    }
+
+    .search-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 550px;
+        margin: 0 auto;
     }
 
     .site-search {
         display: flex;
         margin: 0;
-        flex: 1 1 auto;
+        width: 100%;
 
         input + button {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+            margin: 0;
         }
 
         input {
@@ -35,9 +60,38 @@
             border-bottom-right-radius: 0;
             border-right: 0;
             min-width: unset;
-            width: min(50%, 300px);
+            width: 100%;
+            margin: 0;
         }
     }
+
+    .upload-button {
+        grid-column: 5 / 6;
+    }
+
+    button {
+        margin: 0;
+    }
+
+    .horizontal-nav {
+        grid-column: 6 / 7;
+    }
+
+    @media screen and (max-width: 711px) {
+        grid-template-rows: auto auto;
+
+        .search-wrapper {
+            grid-row: 2 / 3;
+            grid-column: 2 / -2;
+        }
+    }
+}
+
+main {
+    padding: var(--layout-gap);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .user-menu {
@@ -149,10 +203,13 @@
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid var(--border-colour);
+        overflow-x: scroll;
+        gap: 4ch;
 
         section {
             display: flex;
             gap: 1.56ch;
+            flex: 0 0 auto;
         }
 
         a {
@@ -161,18 +218,18 @@
             justify-content: center;
             align-items: center;
             gap: 0.33ch;
-            margin-bottom: -1.5px;
-            border-bottom: 2px solid transparent;
             font-size: 0.96em;
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 2px solid var(--blue-700);
+                box-shadow: 0 -2px 0 inset var(--blue-700);
+                /* border-bottom: 2px solid var(--blue-700); */
             }
 
             &.active {
                 color: var(--gray-700);
-                border-bottom: 2px solid var(--gray-700);
+                /* border-bottom: 2px solid var(--gray-700); */
+                box-shadow: 0 -2px 0 inset var(--gray-700);
             }
         }
     }
@@ -216,7 +273,7 @@
 
     .left-sidebar {
         position: sticky;
-        top: var(--layout-gap);
+        top: calc(var(--site-header-height) + var(--layout-gap));
         height: fit-content;
         background-color: var(--white);
         flex: 0 0 200px;
@@ -690,7 +747,7 @@ a.block-link {
             width: 20ch;
             border: none;
             position: sticky;
-            top: var(--margin);
+            top: calc(var(--site-header-height) + var(--layout-gap));
             line-height: 1.3em;
             margin: 0;
         }

@@ -9,6 +9,12 @@ Colour scheme and other settings
     --monospace-fonts: "Nimbus Mono PS", "Courier New", monospace;
     --global-font-size: 11pt;
 
+    --site-header-height: 58px;
+
+    @media screen and (max-width: 711px) {
+        --site-header-height: 104px;
+    }
+
     /*** Base Colours ***/
     --transparent: transparent;
     --black: rgb(0 0 0);

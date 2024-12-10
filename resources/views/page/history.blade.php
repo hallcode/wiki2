@@ -15,6 +15,7 @@
     Below are the latest 50 revisions.
 </p>
 
+<section class="table-wrapper">
 <table>
     <caption>
         Revisions
@@ -83,4 +84,5 @@
         @endforeach
     </tbody>
 </table>
+</section>
 @endsection
