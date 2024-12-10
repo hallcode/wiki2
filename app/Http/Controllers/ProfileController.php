@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Page;
 
 class ProfileController extends Controller
 {
@@ -16,8 +17,8 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
+        return view("profile.edit", [
+            "user" => $request->user(),
         ]);
     }
 
@@ -28,13 +29,35 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
+        if ($request->user()->isDirty("email")) {
             $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route("profile.edit")->with(
+            "status",
+            "profile-updated"
+        );
+    }
+
+    /**
+     * Update the page associated with the user
+     */
+    public function putPage(Request $request)
+    {
+        $input = $request->validate([
+            "pageName" => "required|exists:pages,title",
+        ]);
+
+        $page = Page::where("title", $input["pageName"])->firstOrFail();
+        auth()->user()->page_id = $page->id;
+        auth()->user()->save();
+
+        return Redirect::route("profile.edit")->with(
+            "status",
+            "profile-updated"
+        );
     }
 
     /**
@@ -42,8 +65,8 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        $request->validateWithBag("userDeletion", [
+            "password" => ["required", "current_password"],
         ]);
 
         $user = $request->user();
@@ -55,6 +78,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to("/");
     }
 }

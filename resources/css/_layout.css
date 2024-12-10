@@ -461,7 +461,7 @@ form footer.fixed {
     margin: 0;
     margin-bottom: var(--layout-gap);
 
-    li {
+    > li {
         margin: var(--margin) 0;
         padding: 0;
     }
@@ -705,32 +705,30 @@ a.block-link {
     .change {
         flex: 1 1 100%;
         margin-bottom: var(--margin);
+        display: flex;
+        flex-direction: column;
+        gap: 0.23em;
 
         &:not(:first-of-type) {
             border-top: 1px solid var(--border-colour);
             padding-top: var(--padding);
         }
 
-        aside {
-            margin-left: auto;
+        header {
+            font-size: 0.95rem;
+            margin: 0;
         }
 
-        header {
-            display: flex;
-            font-size: 1rem;
+        p {
             margin: 0;
+        }
 
-            aside {
-                margin-left: auto;
-            }
-
-            h2 {
-                font-size: inherit;
-                flex: 1 1 auto;
-                border: none;
-                margin: 0;
-                font-weight: 500;
-            }
+        .change-meta {
+            display: flex;
+            align-items: center;
+            gap: 1ch;
+            font-size: 0.9em;
+            color: var(--slate-600);
         }
     }
 
@@ -758,6 +756,25 @@ a.block-link {
             margin: 0;
             padding: 0;
             flex: 1 1 auto;
+        }
+    }
+}
+
+.user-tag {
+    display: flex;
+    gap: 0.5ch;
+    align-items: center;
+    padding: 0.12em 0.66em 0.12em 0.33em;
+    border: 1px solid var(--slate-300);
+    background-color: var(--slate-100);
+    user-select: none;
+    border-radius: 1em;
+
+    &:is(a) {
+        &:hover {
+            border: 1px solid var(--slate-400);
+            background-color: var(--slate-200);
+            text-decoration: none;
         }
     }
 }
