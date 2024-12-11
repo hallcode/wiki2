@@ -63,6 +63,9 @@ Route::middleware("auth", "verified")->group(function () {
             Route::delete("/{slug}/data/{id}", "deleteData")->name(
                 "page.data.delete"
             );
+            Route::put("/{slug}/version", "setVersion")->name(
+                "page.setVersion"
+            );
         });
 
     //*** Category routes ***

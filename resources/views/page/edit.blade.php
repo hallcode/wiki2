@@ -52,7 +52,7 @@
 
     <footer class="fixed">
         <button class="primary">Save</button>
-        <button class="red">Archive page</button>
+        <!-- <button class="red">Archive page</button> -->
     </footer>
 </x-form>
 

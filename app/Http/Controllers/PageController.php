@@ -213,4 +213,29 @@ class PageController extends Controller
 
         return redirect(route("page.view", ["slug" => $page->slug]));
     }
+
+    /**
+     * Sets the page's current_version to the specified ID.
+     * NOTE: At the current time, to maintain the validity of the diffs stored in each version
+     *       THIS OPERATION WILL DELETE VERSIONS NEWER THAN THE SPECIFIED ONE
+     */
+    public function setVersion(Request $request, string $slug)
+    {
+        $page = Page::where("title", urldecode($slug))->firstOrFail();
+        $input = $request->validate([
+            "version_id" => "required|exists:versions,id",
+        ]);
+
+        $version = Version::findOrFail($input["version_id"]);
+        $page->setCurrentVersion($version);
+
+        // This is the naughty bit
+        // TODO: Make the diffs able to cope with branching histories
+        $page
+            ->versions()
+            ->where("id", ">", $version->id)
+            ->delete();
+
+        return redirect()->back();
+    }
 }

@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Str;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class Page extends Model
 {
@@ -21,6 +22,14 @@ class Page extends Model
     use SoftDeletes;
 
     protected static $dontTrack = ["updated"];
+
+    protected $fillable = [
+        "title",
+        "user_id",
+        "type_id",
+        "version_id",
+        "is_template",
+    ];
 
     public function categories(): BelongsToMany
     {
@@ -136,6 +145,41 @@ class Page extends Model
             }
 
             $pageLink->save();
+        }
+    }
+
+    public function calculateImages($text = null)
+    {
+        if ($text == null) {
+            $text = $this->currentVersion->content;
+        }
+
+        $imageLinks = [];
+        preg_match_all(
+            "/\[\#([^\[\]|]+)\|?([0-9]+)?\|?([^\[\]|]+)?\]/",
+            $text,
+            $imageLinks,
+            PREG_SET_ORDER
+        );
+
+        // Delete existing links
+        DB::table("media_page")
+            ->where("page_id", $this->id)
+            ->delete();
+
+        // Get the names in an array
+        $imageNames = [];
+        foreach ($imageLinks as $link) {
+            $imageNames[] = urldecode($link[1]);
+            print urldecode($link[1]);
+        }
+
+        $medias = Media::whereIn("title", $imageNames)->get();
+        foreach ($medias as $media) {
+            DB::table("media_page")->insert([
+                "page_id" => $this->id,
+                "media_id" => $media->id,
+            ]);
         }
     }
 

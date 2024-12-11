@@ -1,6 +1,8 @@
 @php
     $pageTitle = 'History: ' . $page->title;
     $versions = $page->versions()->orderBy('created_at', 'desc')->limit(50)->get();
+
+    $backupVersion = $page->versions()->whereNot('id', $page->currentVersion->id)->orderBy('created_at', 'desc')->first();
 @endphp
 
 @extends("page.layout")
@@ -79,6 +81,12 @@
                 <a href="{{ route('page.view', ['slug' => $page->slug, 'version' => $version->id]) }}">
                     View
                 </a>
+                @if($version->id == $page->currentVersion->id && !empty($backupVersion))
+                | <x-form class="inline-form" method="put" action="{{ route('page.setVersion', ['slug' => $page->slug]) }}">
+                    <input type="hidden" name="version_id" value="{{ $backupVersion->id }}">
+                    <button class="link-button">Delete</button>
+                </x-form>
+                @endif
             </td>
         </tr>
         @endforeach

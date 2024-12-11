@@ -787,3 +787,8 @@ a.block-link {
         }
     }
 }
+
+.inline-form {
+    margin: 0;
+    display: inline-block;
+}
