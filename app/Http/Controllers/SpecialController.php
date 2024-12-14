@@ -58,12 +58,19 @@ class SpecialController extends Controller
             "changeable_type",
             "changeable_id",
             "user_id",
+            DB::raw("DATE(created_at) as date"),
             DB::raw("COUNT(*) as change_count"),
-            DB::raw("max(created_at) as date"),
+            DB::raw("MAX(created_at) as created_at"),
         ])
             ->where("created_at", ">=", now()->subDays(7))
-            ->groupBy("type", "changeable_type", "changeable_id", "user_id")
-            ->orderBy("date", "desc")
+            ->groupBy(
+                "type",
+                "changeable_type",
+                "changeable_id",
+                "user_id",
+                "date"
+            )
+            ->orderBy("created_at", "desc")
             ->get();
 
         return view("special.recent-changes", ["changes" => $changes]);
