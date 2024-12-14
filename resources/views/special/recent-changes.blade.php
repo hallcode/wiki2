@@ -43,7 +43,7 @@
                         @endif
                     </p>
                     <ul class="change-meta">
-                        <li>{{ date_format(date_create($summary->date), "H:i") }}</li>
+                        <li>{{ date_format(date_create($summary->created_at), "H:i") }}</li>
                         <li>{!! $summary->user->getTag() !!}</li>
                     </ul>
                 </li>
